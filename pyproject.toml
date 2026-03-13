@@ -1,5 +1,5 @@
 [project]
-name = "nuremics-labs"
+name = "sim-labs"
 version = "1.0.0"
 description = "Laboratory of applications developed with the nuRemics framework."
 authors = [
@@ -17,7 +17,7 @@ dependencies = [
 
 [project.urls]
 homepage = "https://nuremics.github.io"
-repository = "https://github.com/nuremics/nuremics-labs"
+repository = "https://github.com/nuremics/sim-labs"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]

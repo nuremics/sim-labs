@@ -3,6 +3,7 @@ from typing import Optional
 from nuremics import Application
 
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import GeometryProc
+from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import LabelingProc
 
 APP_NAME = "CANTILEVER_SHEAR_APP"
 
@@ -26,7 +27,19 @@ def main(
                 "height": 0.1,
             },
             "output_paths": {
-                "outfile": "geometry",
+                "outfile": "geometry.brep",
+            },
+        },
+        {
+            "process": LabelingProc,
+            "user_params": {
+                "dim": "dimension",
+            },
+            "required_paths": {
+                "infile": "geometry.brep",
+            },
+            "output_paths": {
+                "outfile": "labels.json",
             },
         },
     ]
@@ -35,7 +48,7 @@ def main(
     # Define default values of parameters #
     # ----------------------------------- #
     default_params = {
-        "dim": 3,
+        "dimension": 3,
     }
 
     # ------------------ #

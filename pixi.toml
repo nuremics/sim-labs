@@ -9,7 +9,7 @@ pandas = ">=2.1.1,<4"
 ruff = ">=0.12.7,<0.16"
 
 [pypi-dependencies]
-nuremics-labs = { path = ".", editable = true }
+sim-labs = { path = ".", editable = true }
 
 [tasks]
 ruff-check = "ruff check"
@@ -26,7 +26,7 @@ openpyxl = ">=3.1.5,<4"
 DEMO_APP = "python ./src/nuremics_labs/apps/general/DEMO_APP/system.py"
 
 [feature.CANTILEVER_SHEAR_APP.dependencies]
-cadquery = ">=2.5.2,<3"
+pythonocc-core = ">=7.4.0,<8"
 
 [feature.CANTILEVER_SHEAR_APP.tasks]
 CANTILEVER_SHEAR_APP = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/system.py"
