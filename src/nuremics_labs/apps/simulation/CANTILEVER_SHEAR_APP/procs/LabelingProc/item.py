@@ -22,9 +22,9 @@ class LabelingProc(Process):
     ----------------
         dim : int
             Dimension of the geometry: 
-            - 1 for a 1D line (beam)
-            - 2 for a 2D surface (shell)
-            - 3 for a 3D volume (solid)
+            - 1 for a 1D line
+            - 2 for a 2D surface
+            - 3 for a 3D volume
 
     Input paths
     -----------
