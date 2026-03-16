@@ -169,7 +169,7 @@ flowchart LR
 
 #### Parameters
 
-- **`dimension`:** Dimension of the geometry: 1 for a line (beam), 2 for a rectangle (shell), 3 for a box (solid).
+- **`dimension`:** Dimension of the geometry: 1 for a 1D line (beam), 2 for a 2D surface (shell), 3 for a 3D volume (solid).
 
 #### Paths
 
