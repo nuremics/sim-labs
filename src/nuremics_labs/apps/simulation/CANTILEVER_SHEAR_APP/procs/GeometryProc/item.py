@@ -109,6 +109,7 @@ if __name__ == "__main__":
         "length": length,
         "width": width,
         "height": height,
+        "outfile": outfile,
     }
 
     # Create process
@@ -116,9 +117,6 @@ if __name__ == "__main__":
         dict_inputs=dict_inputs,
         set_inputs=True,
     )
-
-    # Define output paths
-    process.output_paths["outfile"] = outfile
 
     # Run process
     process()

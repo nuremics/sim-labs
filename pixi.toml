@@ -30,6 +30,8 @@ pythonocc-core = ">=7.4.0,<8"
 
 [feature.CANTILEVER_SHEAR_APP.tasks]
 CANTILEVER_SHEAR_APP = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/system.py"
+GeometryProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/GeometryProc/item.py"
+LabelingProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/LabelingProc/item.py"
 
 [environments]
 demo = ["DEMO_APP"]
