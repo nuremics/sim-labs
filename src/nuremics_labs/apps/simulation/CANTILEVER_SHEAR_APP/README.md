@@ -177,5 +177,5 @@ N/A
 
 ### OUTPUTS
 
-- **`geometry.brep`:** File containing the geometric model (in .step if `dim` = 3|2 or .brep if `dim` = 1).
+- **`geometry.brep`:** File containing the geometric model.
 - **`labels.json`:** File containing the labeled geometric entities.
