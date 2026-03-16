@@ -1,17 +1,14 @@
 # CANTILEVER_SHEAR_APP
 
 <p align="left">
-  <img src="https://img.shields.io/badge/CadQuery-2.5.2+-2980b9" />
-  <img src="https://img.shields.io/badge/Gmsh-4.14.0+-ffffff" />
-  <img src="https://img.shields.io/badge/pythonocc--core-7.9.0-f7941e" />
-  <img src="https://img.shields.io/badge/PyQt6-6.9.1-000000" />
+  <img src="https://img.shields.io/badge/pythonocc--core-7.4.0+-f7941e" />
 </p>
 
 ## Workflow
 
-1. **[`GeometryProc`](https://github.com/nuremics/nuremics-labs/tree/cantilever-shear/src/labs/apps/cms/CANTILEVER_SHEAR_APP/procs/GeometryProc):** Create a geometric representation of a physical system.<br>
-  A/ **`create_geometry`:** Create and export a simple geometric entity (beam, plate, or block) in STEP or BREP format.
-2. **[`LabelingProc`](https://github.com/nuremics/nuremics-labs/tree/cantilever-shear/src/labs/apps/cms/CANTILEVER_SHEAR_APP/procs/LabelingProc):** Define and label the entities of a physical system from its geometric representation.<br>
+1. **[`GeometryProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/GeometryProc):** Create a geometric representation of a physical system.<br>
+  A/ **`create_geometry`:** Create and export a simple geometric entity (3D solid, 2D shell or 1D beam) in BREP format.
+2. **[`LabelingProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/LabelingProc):** Define and label the entities of a physical system from its geometric representation.<br>
   A/ **`label_entities`:** Assign labels to the entities of a geometric model.
 
 ```mermaid
@@ -46,7 +43,7 @@ erDiagram
     float height "0.1"
   }
   **output_paths** {
-    file outfile "geometry.(step/brep)"
+    file outfile "geometry.brep"
   }
 ```
 
@@ -63,7 +60,7 @@ erDiagram
     int dim "dimension"
   }
   **required_paths** {
-    file infile "geometry.(step/brep)"
+    file infile "geometry.brep"
   }
   **output_paths** {
     file outfile "labels.json"
@@ -96,7 +93,7 @@ flowchart LR
 
   subgraph **OUTPUTS**
     direction RL
-    out1["geometry.(step/brep) _(file)_"]
+    out1["geometry.brep _(file)_"]
     out2["labels.json _(file)_"]
   end
 
@@ -127,7 +124,7 @@ flowchart LR
 
   subgraph **OUTPUTS**
     direction RL
-    out1["geometry.(step/brep) _(file)_"]
+    out1["geometry.brep _(file)_"]
   end
 
   **INPUTS** --> proc1
@@ -141,7 +138,7 @@ flowchart LR
 
     subgraph **Paths**
       direction LR
-      out1["geometry.(step/brep) _(file)_"]
+      out1["geometry.brep _(file)_"]
     end
 
     subgraph **Parameters**
@@ -172,7 +169,7 @@ flowchart LR
 
 #### Parameters
 
-- **`dimension`:** Dimension of the geometry: 1 for a line (beam), 2 for a rectangle (plate), 3 for a box (block).
+- **`dimension`:** Dimension of the geometry: 1 for a line (beam), 2 for a rectangle (shell), 3 for a box (solid).
 
 #### Paths
 
@@ -180,5 +177,5 @@ N/A
 
 ### OUTPUTS
 
-- **`geometry.(step/brep)`:** File containing the geometric model (in .step if `dim` = 3|2 or .brep if `dim` = 1).
+- **`geometry.brep`:** File containing the geometric model (in .step if `dim` = 3|2 or .brep if `dim` = 1).
 - **`labels.json`:** File containing the labeled geometric entities.
