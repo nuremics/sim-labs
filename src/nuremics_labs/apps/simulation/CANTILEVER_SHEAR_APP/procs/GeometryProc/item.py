@@ -29,7 +29,7 @@ class GeometryProc(Process):
         length : float
             Length of the geometry along the X axis.
         width : float
-            Width of the geometry along the Y axis (only used if dim = 2|3).
+            Width of the geometry along the Y axis (only used if dim = 2 or 3).
         height : float
             Height of the geometry along the Z axis (only used if dim = 3).
 

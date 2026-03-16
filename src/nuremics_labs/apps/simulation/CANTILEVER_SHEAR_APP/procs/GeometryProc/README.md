@@ -35,10 +35,10 @@ erDiagram
 
 ## Input Parameter(s)
 
-- **`dim`:** Dimension of the geometry: 1 for a 1D line, 2 for a 2D rectangle, 3 for a 3D box.
+- **`dim`:** Dimension of the geometry (`1` for a 1D line, `2` for a 2D rectangle, `3` for a 3D box).
 - **`length`:** Length of the geometry along the X axis.
-- **`width`:** Width of the geometry along the Y axis (only used if dim = 2|3).
-- **`height`:** Height of the geometry along the Z axis (only used if dim = 3).
+- **`width`:** Width of the geometry along the Y axis (only used if dim = `2` or `3`).
+- **`height`:** Height of the geometry along the Z axis (only used if dim = `3`).
 
 ## Output Path(s)
 

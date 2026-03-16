@@ -28,7 +28,7 @@ erDiagram
 
 ## Input Parameter(s)
 
-- **`dim`:** Dimension of the geometry: 1 for a 1D line, 2 for a 2D rectangle, 3 for a 3D box.
+- **`dim`:** Dimension of the geometry (`1` for a 1D line, `2` for a 2D rectangle, `3` for a 3D box).
 
 ## Input Path(s)
 
