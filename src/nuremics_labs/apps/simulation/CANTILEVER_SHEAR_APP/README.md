@@ -7,7 +7,7 @@
 ## Workflow
 
 1. **[`GeometryProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/GeometryProc):** Create a geometric representation of a physical system.<br>
-  A/ **`create_geometry`:** Create and export a simple geometric entity (3D solid, 2D shell or 1D beam) in BREP format.
+  A/ **`create_geometry`:** Create and export a simple geometric entity (1D line, 2D rectangle or 3D box) in BREP format.
 2. **[`LabelingProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/LabelingProc):** Define and label the entities of a physical system from its geometric representation.<br>
   A/ **`label_entities`:** Assign labels to the entities of a geometric model.
 
@@ -169,7 +169,7 @@ flowchart LR
 
 #### Parameters
 
-- **`dimension`:** Dimension of the geometry: 1 for a 1D line (beam), 2 for a 2D surface (shell), 3 for a 3D volume (solid).
+- **`dimension`:** Dimension of the geometry: 1 for a 1D line (beam), 2 for a 2D rectangle (shell), 3 for a 3D box (solid).
 
 #### Paths
 

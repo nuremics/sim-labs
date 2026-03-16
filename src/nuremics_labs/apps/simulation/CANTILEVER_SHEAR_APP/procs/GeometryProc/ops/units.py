@@ -17,19 +17,21 @@ def create_geometry(
     outfile: str,
 ):
     """
-    Create and export a simple geometric entity (3D plate, 2D shell, or 1D beam)
+    Create and export a simple geometric entity (1D line, 2D rectangle or 3D box)
     in BREP format.
 
     Depending on the specified dimension, this function generates:
-    - A 3D rectangular block (plate)
-    - A 2D rectangular surface (shell)
     - A 1D line (beam)
+    - A 2D rectangle (shell)
+    - A 3D box (solid)
 
     Parameters
     ----------
     dim : int
         Dimension of the geometry: 
-        1 for a line (beam), 2 for a rectangle (plate), 3 for a box (block).
+        - 1 for a 1D line (beam)
+        - 2 for a 2D rectangle (shell)
+        - 3 for a 3D box (solid)
     length : float
         Length of the geometry along the X axis.
     width : float

@@ -7,7 +7,7 @@
 ## Process
 
 Create a geometric representation of a physical system.<br>
-A/ **`create_geometry`:** Create and export a simple geometric entity (3D solid, 2D shell or 1D beam) in BREP format.
+A/ **`create_geometry`:** Create and export a simple geometric entity (1D line, 2D rectangle or 3D box) in BREP format.
 
 ```mermaid
 erDiagram
@@ -35,7 +35,7 @@ erDiagram
 
 ## Input Parameter(s)
 
-- **`dim`:** Dimension of the geometry: 1 for a 1D line (beam), 2 for a 2D surface (shell), 3 for a 3D volume (solid).
+- **`dim`:** Dimension of the geometry: 1 for a 1D line (beam), 2 for a 2D rectangle (shell), 3 for a 3D box (solid).
 - **`length`:** Length of the geometry along the X axis.
 - **`width`:** Width of the geometry along the Y axis (only used if dim = 2|3).
 - **`height`:** Height of the geometry along the Z axis (only used if dim = 3).

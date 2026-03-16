@@ -28,7 +28,7 @@ erDiagram
 
 ## Input Parameter(s)
 
-- **`dim`:** Dimension of the geometry: 1 for a 1D line (beam), 2 for a 2D surface (plate), 3 for a 3D volume (solid).
+- **`dim`:** Dimension of the geometry: 1 for a 1D line (beam), 2 for a 2D rectangle (shell), 3 for a 3D box (solid).
 
 ## Input Path(s)
 

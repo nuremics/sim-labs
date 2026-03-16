@@ -16,7 +16,7 @@ class GeometryProc(Process):
     Process
     -------
         A/ create_geometry
-            Create and export a simple geometric entity (3D solid, 2D shell or 1D beam)
+            Create and export a simple geometric entity (1D line, 2D rectangle or 3D box)
             in BREP format.
 
     Input parameters
@@ -24,8 +24,8 @@ class GeometryProc(Process):
         dim : int
             Dimension of the geometry: 
             - 1 for a 1D line (beam)
-            - 2 for a 2D surface (shell)
-            - 3 for a 3D volume (solid)
+            - 2 for a 2D rectangle (shell)
+            - 3 for a 3D box (solid)
         length : float
             Length of the geometry along the X axis.
         width : float
@@ -55,7 +55,7 @@ class GeometryProc(Process):
 
     def create_geometry(self):
         """
-        Create and export a simple geometric entity (3D solid, 2D shell or 1D beam)
+        Create and export a simple geometric entity (1D line, 2D rectangle or 3D box)
         in BREP format.
 
         Uses
