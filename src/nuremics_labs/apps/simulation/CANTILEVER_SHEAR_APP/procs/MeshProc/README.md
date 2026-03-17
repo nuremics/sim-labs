@@ -6,7 +6,7 @@
 
 ## Process
 
-Discretize the geometric representation of a physical system into a computational mesh and propagate defined labels onto the mesh entities.<br>
+Discretize the geometric representation of a physical system into a computational mesh.<br>
 A/ **`generate_mesh`:** Generate and export a computational mesh from a geometric model by discretizing the domain into mesh entities (nodes, elements) and assigning labeled physical groups.
 
 ```mermaid

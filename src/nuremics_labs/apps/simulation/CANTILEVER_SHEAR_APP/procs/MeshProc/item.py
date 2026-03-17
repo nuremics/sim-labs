@@ -13,7 +13,7 @@ from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.MeshProc.ops impor
 class MeshProc(Process):
     """
     Discretize the geometric representation of a physical system 
-    into a computational mesh and propagate defined labels onto the mesh entities.
+    into a computational mesh.
 
     Process
     -------
