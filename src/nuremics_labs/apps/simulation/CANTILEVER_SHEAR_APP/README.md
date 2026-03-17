@@ -13,10 +13,10 @@
 
 ```mermaid
 flowchart RL
-  **GeometryProc** e1@--1--o **CANTILEVER_SHEAR_APP**
-  **LabelingProc** e2@--2--o **CANTILEVER_SHEAR_APP**
-  **create_geometry** e3@--A--o **GeometryProc**
-  **label_entities** e4@--A--o **LabelingProc**
+  Proc1[<b>GeometryProc<b>] e1@--1--o App[<b>CANTILEVER_SHEAR_APP<b>]
+  Proc2[<b>LabelingProc<b>] e2@--2--o App
+  Op11[<b>create_geometry<b>] e3@--A--o Proc1
+  Op21[<b>label_entities<b>] e4@--A--o Proc2
   e1@{ animate: true }
   e2@{ animate: true }
   e3@{ animate: true }
@@ -71,95 +71,95 @@ erDiagram
 
 ```mermaid
 flowchart LR
-  subgraph **INPUTS**
+  subgraph Inputs[<b>INPUTS<b>]
     direction TB
 
-    subgraph **Paths**
+    subgraph Paths[<b>Paths<b>]
       direction LR
       path["_"]
     end
 
-    subgraph **Parameters**
+    subgraph Parameters[<b>Parameters<b>]
       direction LR
-      param1["dimension _(int)_"]
+      param1["dimension <i>(int)<i>"]
     end
   end
 
-  subgraph **CANTILEVER_SHEAR_APP**
+  subgraph App[<b>CANTILEVER_SHEAR_APP<b>]
     direction RL
     proc1["GeometryProc"]
     proc2["LabelingProc"]
   end
 
-  subgraph **OUTPUTS**
+  subgraph Outputs[<b>OUTPUTS<b>]
     direction RL
-    out1["geometry.brep _(file)_"]
-    out2["labels.json _(file)_"]
+    out1["geometry.brep <i>(file)<i>"]
+    out2["labels.json <i>(file)<i>"]
   end
 
-  **INPUTS** --> **CANTILEVER_SHEAR_APP**
-  **CANTILEVER_SHEAR_APP** --> **OUTPUTS**
+  Inputs --> App
+  App --> Outputs
 ```
 
 ```mermaid
 flowchart LR
-  subgraph **INPUTS**
+  subgraph Inputs[<b>INPUTS<b>]
     direction TB
 
-    subgraph **Paths**
+    subgraph Paths[<b>Paths<b>]
       direction LR
       path["_"]
     end
 
-    subgraph **Parameters**
+    subgraph Parameters[<b>Parameters<b>]
       direction LR
-      param1["dimension _(int)_"]
+      param1["dimension <i>(int)<i>"]
     end
   end
 
-  subgraph **CANTILEVER_SHEAR_APP**
+  subgraph App[<b>CANTILEVER_SHEAR_APP<b>]
     direction RL
     proc1["GeometryProc"]
   end
 
-  subgraph **OUTPUTS**
+  subgraph Outputs[<b>OUTPUTS<b>]
     direction RL
-    out1["geometry.brep _(file)_"]
+    out1["geometry.brep <i>(file)<i>"]
   end
 
-  **INPUTS** --> proc1
-  proc1 --> **OUTPUTS**
+  Inputs --> proc1
+  proc1 --> Outputs
 ```
 
 ```mermaid
 flowchart LR
-  subgraph **INPUTS**
+  subgraph Inputs[<b>INPUTS<b>]
     direction TB
 
-    subgraph **Paths**
+    subgraph Paths[<b>Paths<b>]
       direction LR
-      out1["geometry.brep _(file)_"]
+      out1["geometry.brep <i>(file)<i>"]
     end
 
-    subgraph **Parameters**
+    subgraph Parameters[<b>Parameters<b>]
       direction LR
-      param1["dimension _(int)_"]
+      param1["dimension <i>(int)<i>"]
     end
 
   end
 
-  subgraph **CANTILEVER_SHEAR_APP**
+  subgraph App[<b>CANTILEVER_SHEAR_APP<b>]
     direction RL
     proc2["LabelingProc"]
   end
 
-  subgraph **OUTPUTS**
+  subgraph Outputs[<b>OUTPUTS<b>]
     direction RL
-    out2["labels.json _(file)_"]
+    out2["labels.json <i>(file)<i>"]
   end
 
-  **INPUTS** --> proc2
-  proc2 --> **OUTPUTS**
+  Inputs --> proc2
+  proc2 --> Outputs
 
   classDef blueBox fill:#d0e6ff,stroke:#339,stroke-width:1.5px;
   class out1 blueBox;
