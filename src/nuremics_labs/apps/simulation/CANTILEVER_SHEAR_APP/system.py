@@ -4,6 +4,7 @@ from nuremics import Application
 
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import GeometryProc
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import LabelingProc
+from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import MeshProc
 
 APP_NAME = "CANTILEVER_SHEAR_APP"
 
@@ -40,6 +41,21 @@ def main(
             },
             "output_paths": {
                 "outfile": "labels.json",
+            },
+        },
+        {
+            "process": MeshProc,
+            "user_params": {
+                "dim": "dimension",
+            },
+            "user_paths": {
+                "mesh_settings_file": "mesh_settings.json",
+            },
+            "required_paths": {
+                "infile": "labels.json",
+            },
+            "output_paths": {
+                "outfile": "mesh.msh",
             },
         },
     ]

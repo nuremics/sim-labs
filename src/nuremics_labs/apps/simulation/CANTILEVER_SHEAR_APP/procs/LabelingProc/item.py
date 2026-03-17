@@ -23,8 +23,8 @@ class LabelingProc(Process):
         dim : int
             Dimension of the geometry: 
             - 1 for a 1D line
-            - 2 for a 2D surface
-            - 3 for a 3D volume
+            - 2 for a 2D rectangle
+            - 3 for a 3D box
 
     Input paths
     -----------
@@ -85,7 +85,7 @@ if __name__ == "__main__":
     # Input parameters
     dim = 3
 
-    # Input parameters
+    # Input paths
     infile = Path(r"...")
 
     # Output paths
