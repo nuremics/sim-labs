@@ -247,4 +247,4 @@ flowchart LR
 
 - **`geometry.brep`:** File containing the geometric model.
 - **`labels.json`:** File containing the labeled geometric entities.
-- **`mesh.msh`:** File containing the output mesh (exported in Gmsh format).
+- **`mesh.msh`:** File containing the computational mesh (exported in Gmsh format).

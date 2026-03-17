@@ -22,8 +22,7 @@ def generate_mesh(
         Path to the file containing the geometric model 
         and associated labels (JSON format).
     outfile : str
-        Path to the output mesh file. The mesh is exported in Gmsh
-        format (.msh).
+        Path to the computational mesh (exported in Gmsh format).
     dim : int
         Dimension of the geometry: 
         - 1 for a 1D line

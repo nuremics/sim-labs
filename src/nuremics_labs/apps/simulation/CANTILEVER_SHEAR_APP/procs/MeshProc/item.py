@@ -40,7 +40,7 @@ class MeshProc(Process):
     Outputs
     -------
         outfile : msh
-            File containing the output mesh (exported in Gmsh format).
+            File containing the computational mesh (exported in Gmsh format).
     """
 
     # Parameters

@@ -42,4 +42,4 @@ erDiagram
 
 ## Output Path(s)
 
-- **`outfile`:** File containing the output mesh (exported in Gmsh format).
+- **`outfile`:** File containing the computational mesh (exported in Gmsh format).
