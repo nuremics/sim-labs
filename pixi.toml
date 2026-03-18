@@ -30,12 +30,16 @@ pythonocc-core = ">=7.4.0,<8"
 
 [feature.CANTILEVER_SHEAR_APP.pypi-dependencies]
 gmsh = ">=4.15.0,<5"
+meshio = ">=5.3.5,<6"
+numpy = ">=2.4.2,<3"
+pyvista = ">=0.47.1,<0.48"
 
 [feature.CANTILEVER_SHEAR_APP.tasks]
 CANTILEVER_SHEAR_APP = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/system.py"
 GeometryProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/GeometryProc/item.py"
 LabelingProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/LabelingProc/item.py"
 MeshProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/MeshProc/item.py"
+ModelProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/ModelProc/item.py"
 
 [environments]
 demo = ["DEMO_APP"]

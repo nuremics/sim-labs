@@ -5,6 +5,7 @@ from nuremics import Application
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import GeometryProc
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import LabelingProc
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import MeshProc
+from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import ModelProc
 
 APP_NAME = "CANTILEVER_SHEAR_APP"
 
@@ -56,6 +57,15 @@ def main(
             },
             "output_paths": {
                 "outfile": "mesh.msh",
+            },
+        },
+        {
+            "process": ModelProc,
+            "required_paths": {
+                "infile": "mesh.msh",
+            },
+            "output_paths": {
+                "outfile": "model.vtk",
             },
         },
     ]
