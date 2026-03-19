@@ -6,6 +6,7 @@ from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import GeometryPro
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import LabelingProc
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import MeshProc
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import ModelProc
+from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import SolverProc
 
 APP_NAME = "CANTILEVER_SHEAR_APP"
 
@@ -68,6 +69,28 @@ def main(
                 "outfile": "model.vtk",
             },
         },
+        {
+            "process": SolverProc,
+            "user_params": {
+                "mass": "mass",
+            },
+            "hard_params": {
+                "young": 1.2e6,
+                "poisson": 0.0,
+                "force": 4.0,
+            },
+            "user_paths": {
+                "mesh_settings_file": "mesh_settings.json",
+                "solver_settings_file": "solver_settings.json",
+            },
+            "required_paths": {
+                "mesh_file": "mesh.msh",
+                "model_file": "model.vtk",
+            },
+            "output_paths": {
+                "outdir": "solution",
+            },
+        },
     ]
 
     # ----------------------------------- #
@@ -75,6 +98,7 @@ def main(
     # ----------------------------------- #
     default_params = {
         "dimension": 3,
+        "mass": 5.0,
     }
 
     # ------------------ #

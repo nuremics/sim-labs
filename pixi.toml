@@ -1,5 +1,5 @@
 [workspace]
-channels = ["conda-forge"]
+channels = ["conda-forge", "https://prefix.dev/sofa-framework"]
 platforms = ["linux-64", "win-64", "osx-64", "osx-arm64"]
 
 [dependencies]
@@ -27,6 +27,10 @@ DEMO_APP = "python ./src/nuremics_labs/apps/general/DEMO_APP/system.py"
 
 [feature.CANTILEVER_SHEAR_APP.dependencies]
 pythonocc-core = ">=7.4.0,<8"
+openpyxl = ">=3.1.5,<4"
+sofa-app = "=25.6.0"
+sofa-python3 = "=25.6.0"
+sofa-beamadapter = "=25.6.0"
 
 [feature.CANTILEVER_SHEAR_APP.pypi-dependencies]
 gmsh = ">=4.15.0,<5"
@@ -40,6 +44,8 @@ GeometryProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/
 LabelingProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/LabelingProc/item.py"
 MeshProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/MeshProc/item.py"
 ModelProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/ModelProc/item.py"
+SOFA = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/SolverProc/ops/sofa.py"
+test = "python test.py"
 
 [environments]
 demo = ["DEMO_APP"]

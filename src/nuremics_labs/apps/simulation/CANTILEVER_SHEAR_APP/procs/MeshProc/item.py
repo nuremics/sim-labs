@@ -75,7 +75,6 @@ class MeshProc(Process):
             outfile
         """
 
-        # Load mesh settings
         with open(self.mesh_settings_file) as f:
             dict_mesh_settings = json.load(f)
 
