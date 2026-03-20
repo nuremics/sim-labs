@@ -28,6 +28,7 @@ DEMO_APP = "python ./src/nuremics_labs/apps/general/DEMO_APP/system.py"
 [feature.CANTILEVER_SHEAR_APP.dependencies]
 pythonocc-core = ">=7.4.0,<8"
 openpyxl = ">=3.1.5,<4"
+matplotlib = ">=3.9.4,<4"
 sofa-app = "=25.6.0"
 sofa-python3 = "=25.6.0"
 sofa-beamadapter = "=25.6.0"

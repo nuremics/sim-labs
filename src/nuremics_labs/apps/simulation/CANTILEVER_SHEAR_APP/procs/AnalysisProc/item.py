@@ -1,0 +1,119 @@
+import json
+import os
+from pathlib import Path
+
+import attrs
+from nuremics import Process
+
+from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.AnalysisProc.ops import (
+    plot_overall,
+)
+
+
+@attrs.define
+class AnalysisProc(Process):
+    """
+    Perform overall comparisons between simulated (model) and theoretical trajectories.
+
+    Pipeline
+    --------
+        A/ plot_overall_model_vs_theory
+            Generate overall comparative plots of simulated (model) and theoritical trajectories.
+
+    Analysis
+    --------
+        - comp_folder : folder
+            'results.xlsx' : File containing both trajectories.
+
+    Outputs
+    -------
+        fig_file : png
+            Image containing overall comparative plots.
+    """
+
+    # Analysis
+    metadata = {
+        "input": True,
+        "analysis": True,
+    }
+    data_file: str = attrs.field(init=False, metadata=metadata)
+
+    # Outputs
+    fig_file: Path = attrs.field(init=False, metadata={"output": True}, converter=Path)
+
+    def __call__(self) -> None:
+        super().__call__()
+
+        self.plot_overall()
+    
+    def plot_overall(self) -> None:
+        """
+        Generate overall comparative plots of simulated (model) and theoritical trajectories.
+
+        Uses
+        ----
+            comp_folder
+
+        Generates
+        ---------
+            fig_file
+        """
+
+        self.process_output(
+            out=self.data_file,
+            func=plot_overall,
+            filename=self.fig_file,
+        )
+
+
+if __name__ == "__main__":
+
+    # ================================================================== #
+    #                      USER-DEFINED PARAMETERS                       #
+    #              >>>>> TO BE EDITED BY THE OPERATOR <<<<<              #
+    # ================================================================== #
+    
+    # Define working directory
+    working_dir = Path(r"...")
+
+    # Analysis
+    comp_folder = "comparison"
+
+    # Output paths
+    fig_file = "overall_comparisons.png"
+
+    # Paths file
+    paths_file = Path(r"...") / ".paths.json"
+
+    # Analysis file
+    analysis_file = Path(r"...") / "analysis.json"
+
+    # ================================================================== #
+
+    # Go to working directory
+    os.chdir(working_dir)
+
+    # Create dictionary containing input data
+    dict_inputs = {
+        "comp_folder": comp_folder,
+        "fig_file": fig_file,
+    }
+    
+    # Create process
+    process = TrajectoryAnalysisProc(
+        dict_inputs=dict_inputs,
+        set_inputs=True,
+    )
+    process.is_case = False
+
+    # Get dictionary of paths
+    with open(paths_file) as f:
+        process.dict_paths = json.load(f)
+
+    # Get dictionary of analysis settings
+    with open(analysis_file) as f:
+        process.dict_analysis = json.load(f) 
+
+    # Run process
+    process()
+    process.finalize()

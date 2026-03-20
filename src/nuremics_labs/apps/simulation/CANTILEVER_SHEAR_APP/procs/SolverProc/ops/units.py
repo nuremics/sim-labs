@@ -4,6 +4,9 @@ import glob
 import shutil
 from pathlib import Path
 
+import numpy as np
+import pyvista as pv
+
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.SolverProc.ops.sofa import main as sofa
 
 
@@ -76,6 +79,10 @@ def compile_solution(
     results = glob.glob(str(results_path / "dump" / "solution*.vtu"))
     results = sorted(results, key=_extract_number)
 
+    _compute_displacement_field(
+        results=results,
+    )
+
     # Create content of the .pvd file
     pvd_content = '<?xml version="1.0"?>\n'
     pvd_content += '<VTKFile type="Collection" version="0.1" byte_order="LittleEndian">\n'
@@ -92,3 +99,23 @@ def compile_solution(
     # Write content within the .pvd file
     with open(output_path, "w") as pvd_file:
         pvd_file.write(pvd_content)
+
+
+def _compute_displacement_field(
+    results: list,
+) -> None:
+    
+    mesh0: pv.UnstructuredGrid = pv.read(results[0])
+
+    for vtu_file in results:
+
+        mesh: pv.UnstructuredGrid = pv.read(vtu_file)
+        mesh.point_data["Displacement"] = np.zeros((mesh.n_points, 3), dtype=float)
+
+        for i in range(mesh.n_points):
+            mesh.point_data["Displacement"][i, :] = mesh.points[i, :] - mesh0.points[i, :]
+        
+        mesh.save(
+            filename=vtu_file,
+            binary=False,
+        )

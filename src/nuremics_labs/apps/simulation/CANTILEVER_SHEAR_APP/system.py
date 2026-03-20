@@ -7,6 +7,8 @@ from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import LabelingPro
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import MeshProc
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import ModelProc
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import SolverProc
+from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import PostProc
+from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import AnalysisProc
 
 APP_NAME = "CANTILEVER_SHEAR_APP"
 
@@ -89,6 +91,36 @@ def main(
             },
             "output_paths": {
                 "outdir": "solution",
+            },
+        },
+        {
+            "process": PostProc,
+            "required_paths": {
+                "model_file": "model.vtk",
+                "solution_dir": "solution",
+            },
+            "output_paths": {
+                "data_file": "results.xlsx",
+                "fig_file": "deflection.png",
+            },
+        },
+        {
+            "process": AnalysisProc,
+            "overall_analysis": {
+                "data_file": "results.xlsx",
+            },
+            "output_paths": {
+                "fig_file": "overall_comparisons.png",
+            },
+            "settings": {
+                "add": True,
+                "color": "red",
+                "linestyle": "-",
+                "linewidth": 2.0,
+                # "marker": "o",
+                # "markersize": 8,
+                # "markevery": 20,
+                "label": ""
             },
         },
     ]
