@@ -9,6 +9,7 @@
   <img src="https://img.shields.io/badge/SOFA Framework-25.6.0-e84e1c" />
   <img src="https://img.shields.io/badge/Pandas-2.1.1+-0b0153?style=flat&logo=pandas&logoColor=white" />
   <img src="https://img.shields.io/badge/openpyxl-3.1.5+-010043" />
+  <img src="https://img.shields.io/badge/matplotlib-3.9.4+-11557c" />
 </p>
 
 ## Workflow
@@ -27,6 +28,9 @@
 6. **[`PostProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/PostProc):** Post-process simulation results to extract relevant metrics.<br>
   A/ **`get_deflection`:** Extract the displacement at the extremity of the object from raw simulation results and save it to a metric data file.<br>
   B/ **`plot_deflection`:** Plot the displacement metric over time.
+7. **[`AnalysisProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/AnalysisProc):** Analyze the results of multiple simulation runs to identify trends, compare metrics, and draw conclusions.<br>
+  A/ **`plot_overall`:** Visualize and compare the metrics of the various simulation runs on a single plot.<br>
+  B/ **`summarize_overall_errors`:** Compile and summarize the deviations between computed simulation results and reference solutions for all performed tests.
 
 ```mermaid
 flowchart RL
@@ -199,6 +203,22 @@ erDiagram
   }
 ```
 
+```mermaid
+erDiagram
+  **CANTILEVER_SHEAR_APP** ||--|| **overall_analysis** : mapping
+  **CANTILEVER_SHEAR_APP** ||--|| **output_paths** : mapping
+  **overall_analysis** ||--|| **AnalysisProc** : mapping
+  **output_paths** ||--|| **AnalysisProc** : mapping
+
+  **overall_analysis** {
+    file data_file "metrics.xlsx"
+  }
+  **output_paths** {
+    file fig_file "overall_comparisons.png"
+    file error_file "overall_errors.csv"
+  }
+```
+
 ## I/O Interface
 
 ```mermaid
@@ -226,7 +246,8 @@ flowchart LR
     proc3["MeshProc"]
     proc4["ModelProc"]
     proc5["SolverProc"]
-    proc5["PostProc"]
+    proc6["PostProc"]
+    proc7["AnalysisProc"]
   end
 
   subgraph Outputs[<b>OUTPUTS<b>]
@@ -237,7 +258,8 @@ flowchart LR
     out4["model.vtk <i>(file)<i>"]
     out5["solution <i>(folder)<i>"]
     out6["metrics.xlsx <i>(file)<i>"]
-    out7["deflection.png <i>(file)<i>"]
+    out7["overall_comparisons.png <i>(file)<i>"]
+    out8["overall_errors.csv <i>(file)<i>"]
   end
 
   Inputs --> App
@@ -453,6 +475,41 @@ flowchart LR
   class path2 blueBox;
 ```
 
+```mermaid
+flowchart LR
+  subgraph Inputs[<b>INPUTS<b>]
+    direction TB
+
+    subgraph Paths[<b>Paths<b>]
+      direction LR
+      path1["metrics.xlsx <i>(file)<i>"]
+    end
+
+    subgraph Parameters[<b>Parameters<b>]
+      direction LR
+      param1["_"]
+    end
+
+  end
+
+  subgraph App[<b>CANTILEVER_SHEAR_APP<b>]
+    direction RL
+    proc["AnalysisProc"]
+  end
+
+  subgraph Outputs[<b>OUTPUTS<b>]
+    direction RL
+    out1["overall_comparisons.png <i>(file)<i>"]
+    out2["overall_errors.csv <i>(file)<i>"]
+  end
+
+  Inputs --> proc
+  proc --> Outputs
+
+  classDef blueBox fill:#d0e6ff,stroke:#339,stroke-width:1.5px;
+  class path1 blueBox;
+```
+
 ### INPUTS
 
 #### Parameters
@@ -474,3 +531,5 @@ flowchart LR
 - **`solution`:** Directory containing the simulation results.
 - **`metrics.xlsx`:** File containing the computed displacement metric.
 - **`deflection.png`:** File containing the visual representation of the displacement metric.
+- **`overall_comparisons.png`:** File containing the visual comparisons of the metrics for the various simulation runs.
+- **`overall_errors.csv`:** File summarizing the obtained errors across all simulation runs.

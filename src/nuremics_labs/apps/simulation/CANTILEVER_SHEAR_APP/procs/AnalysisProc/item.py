@@ -7,6 +7,7 @@ from nuremics import Process
 
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.AnalysisProc.ops import (
     plot_overall,
+    summarize_overall_errors,
 )
 
 
@@ -40,11 +41,13 @@ class AnalysisProc(Process):
 
     # Outputs
     fig_file: Path = attrs.field(init=False, metadata={"output": True}, converter=Path)
+    error_file: Path = attrs.field(init=False, metadata={"output": True}, converter=Path)
 
     def __call__(self) -> None:
         super().__call__()
 
         self.plot_overall()
+        self.summarize_overall_errors()
     
     def plot_overall(self) -> None:
         """
@@ -63,6 +66,25 @@ class AnalysisProc(Process):
             out=self.data_file,
             func=plot_overall,
             filename=self.fig_file,
+        )
+    
+    def summarize_overall_errors(self) -> None:
+        """
+        Generate overall comparative plots of simulated (model) and theoritical trajectories.
+
+        Uses
+        ----
+            comp_folder
+
+        Generates
+        ---------
+            fig_file
+        """
+
+        self.process_output(
+            out=self.data_file,
+            func=summarize_overall_errors,
+            filename=self.error_file,
         )
 
 
