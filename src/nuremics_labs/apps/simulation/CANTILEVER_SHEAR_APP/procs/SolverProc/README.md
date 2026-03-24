@@ -9,7 +9,7 @@
 ## Process
 
 Compute the mechanical deformation of a physical system under prescribed boundary conditions.<br>
-A/ **`run_solver`:** Define the simulation setup, apply boundary conditions, and execute the solver to compute the raw mechanical response of the system.
+A/ **`run_solver`:** Define the simulation setup, apply boundary conditions, and execute the solver to compute the raw mechanical response of the system.<br>
 B/ **`compile_solution`:** Compile the raw simulation results into a PVD format and compute the displacement field over the model.
 
 ```mermaid

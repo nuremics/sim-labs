@@ -20,7 +20,7 @@
 4. **[`ModelProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/ModelProc):** Convert a meshed geometry into a model object mapping geometric labels to mesh entities.<br>
   A/ **`build_model`:** Build a VTK-based model object from a meshed geometry by creating data fields that map physical groups to their corresponding nodes and elements.
 5. **[`SolverProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/SolverProc):** Compute the mechanical deformation of a physical system under prescribed boundary conditions.<br>
-  A/ **`run_solver`:** Define the simulation setup, apply boundary conditions, and execute the solver to compute the raw mechanical response of the system.
+  A/ **`run_solver`:** Define the simulation setup, apply boundary conditions, and execute the solver to compute the raw mechanical response of the system.<br>
   B/ **`compile_solution`:** Compile the raw simulation results into a PVD format and compute the displacement field over the model.
 
 ```mermaid
