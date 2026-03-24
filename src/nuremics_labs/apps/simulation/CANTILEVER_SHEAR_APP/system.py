@@ -99,14 +99,14 @@ def main(
                 "solution_dir": "solution",
             },
             "output_paths": {
-                "data_file": "results.xlsx",
+                "data_file": "metrics.xlsx",
                 "fig_file": "deflection.png",
             },
         },
         {
             "process": AnalysisProc,
             "overall_analysis": {
-                "data_file": "results.xlsx",
+                "data_file": "metrics.xlsx",
             },
             "output_paths": {
                 "fig_file": "overall_comparisons.png",

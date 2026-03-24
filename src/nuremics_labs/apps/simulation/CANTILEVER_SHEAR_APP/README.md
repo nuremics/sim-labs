@@ -7,6 +7,8 @@
   <img src="https://img.shields.io/badge/NumPy-2.4.2+-4dabcf?style=flat&logo=numpy&logoColor=white" />
   <img src="https://img.shields.io/badge/PyVista-0.47.1+-00b25e" />
   <img src="https://img.shields.io/badge/SOFA Framework-25.6.0-e84e1c" />
+  <img src="https://img.shields.io/badge/Pandas-2.1.1+-0b0153?style=flat&logo=pandas&logoColor=white" />
+  <img src="https://img.shields.io/badge/openpyxl-3.1.5+-010043" />
 </p>
 
 ## Workflow
@@ -22,6 +24,9 @@
 5. **[`SolverProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/SolverProc):** Compute the mechanical deformation of a physical system under prescribed boundary conditions.<br>
   A/ **`run_solver`:** Define the simulation setup, apply boundary conditions, and execute the solver to compute the raw simulation results.<br>
   B/ **`compile_solution`:** Compile the raw simulation results into a PVD format and compute the displacement field over the model.
+6. **[`PostProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/PostProc):** Post-process simulation results to extract relevant metrics.<br>
+  A/ **`get_deflection`:** Extract the displacement at the extremity of the object from raw simulation results and save it to a metric data file.<br>
+  B/ **`plot_deflection`:** Plot the displacement metric over time.
 
 ```mermaid
 flowchart RL
@@ -143,7 +148,7 @@ erDiagram
 
 ```mermaid
 erDiagram
-**CANTILEVER_SHEAR_APP** ||--|| **user_params** : mapping
+  **CANTILEVER_SHEAR_APP** ||--|| **user_params** : mapping
   **CANTILEVER_SHEAR_APP** ||--|| **hard_params** : mapping
   **CANTILEVER_SHEAR_APP** ||--|| **user_paths** : mapping
   **CANTILEVER_SHEAR_APP** ||--|| **required_paths** : mapping
@@ -173,7 +178,24 @@ erDiagram
     file model_file "model.vtk"
   }
   **output_paths** {
-    file outdir "solution"
+    folder outdir "solution"
+  }
+```
+
+```mermaid
+erDiagram
+  **CANTILEVER_SHEAR_APP** ||--|| **required_paths** : mapping
+  **CANTILEVER_SHEAR_APP** ||--|| **output_paths** : mapping
+  **required_paths** ||--|| **PostProc** : mapping
+  **output_paths** ||--|| **PostProc** : mapping
+
+  **required_paths** {
+    file model_file "model.vtk"
+    folder solution_dir "solution"
+  }
+  **output_paths** {
+    file data_file "metrics.xlsx"
+    file fig_file "deflection.png"
   }
 ```
 
@@ -204,6 +226,7 @@ flowchart LR
     proc3["MeshProc"]
     proc4["ModelProc"]
     proc5["SolverProc"]
+    proc5["PostProc"]
   end
 
   subgraph Outputs[<b>OUTPUTS<b>]
@@ -213,6 +236,8 @@ flowchart LR
     out3["mesh.msh <i>(file)<i>"]
     out4["model.vtk <i>(file)<i>"]
     out5["solution <i>(folder)<i>"]
+    out6["metrics.xlsx <i>(file)<i>"]
+    out7["deflection.png <i>(file)<i>"]
   end
 
   Inputs --> App
@@ -380,7 +405,7 @@ flowchart LR
 
   subgraph Outputs[<b>OUTPUTS<b>]
     direction RL
-    out3["solution <i>(folder)<i>"]
+    out1["solution <i>(folder)<i>"]
   end
 
   Inputs --> proc
@@ -389,6 +414,43 @@ flowchart LR
   classDef blueBox fill:#d0e6ff,stroke:#339,stroke-width:1.5px;
   class path4 blueBox;
   class path5 blueBox;
+```
+
+```mermaid
+flowchart LR
+  subgraph Inputs[<b>INPUTS<b>]
+    direction TB
+
+    subgraph Paths[<b>Paths<b>]
+      direction LR
+      path1["model.vtk <i>(file)<i>"]
+      path2["solution <i>(folder)<i>"]
+    end
+
+    subgraph Parameters[<b>Parameters<b>]
+      direction LR
+      param1["_"]
+    end
+
+  end
+
+  subgraph App[<b>CANTILEVER_SHEAR_APP<b>]
+    direction RL
+    proc["PostProc"]
+  end
+
+  subgraph Outputs[<b>OUTPUTS<b>]
+    direction RL
+    out1["metrics.xlsx <i>(file)<i>"]
+    out2["deflection.png <i>(file)<i>"]
+  end
+
+  Inputs --> proc
+  proc --> Outputs
+
+  classDef blueBox fill:#d0e6ff,stroke:#339,stroke-width:1.5px;
+  class path1 blueBox;
+  class path2 blueBox;
 ```
 
 ### INPUTS
@@ -410,3 +472,5 @@ flowchart LR
 - **`mesh.msh`:** File containing the computational mesh (exported in Gmsh format).
 - **`model.vtk`:** File containing the model object.
 - **`solution`:** Directory containing the simulation results.
+- **`metrics.xlsx`:** File containing the computed displacement metric.
+- **`deflection.png`:** File containing the visual representation of the displacement metric.
