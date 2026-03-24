@@ -43,17 +43,13 @@ flowchart RL
 
 ```mermaid
 erDiagram
-  **CANTILEVER_SHEAR_APP** ||--|| **user_params** : mapping
   **CANTILEVER_SHEAR_APP** ||--|| **hard_params** : mapping
   **CANTILEVER_SHEAR_APP** ||--|| **output_paths** : mapping
-  **user_params** ||--|| **GeometryProc** : mapping
   **hard_params** ||--|| **GeometryProc** : mapping
   **output_paths** ||--|| **GeometryProc** : mapping
 
-  **user_params** {
-    int dim "dimension"
-  }
   **hard_params** {
+    int dim "3"
     float length "10.0"
     float width "1.0"
     float height "0.1"
@@ -65,15 +61,15 @@ erDiagram
 
 ```mermaid
 erDiagram
-  **CANTILEVER_SHEAR_APP** ||--|| **user_params** : mapping
+  **CANTILEVER_SHEAR_APP** ||--|| **hard_params** : mapping
   **CANTILEVER_SHEAR_APP** ||--|| **required_paths** : mapping
   **CANTILEVER_SHEAR_APP** ||--|| **output_paths** : mapping
-  **user_params** ||--|| **LabelingProc** : mapping
+  **hard_params** ||--|| **LabelingProc** : mapping
   **required_paths** ||--|| **LabelingProc** : mapping
   **output_paths** ||--|| **LabelingProc** : mapping
 
-  **user_params** {
-    int dim "dimension"
+  **hard_params** {
+    int dim "3"
   }
   **required_paths** {
     file infile "geometry.brep"
@@ -85,17 +81,17 @@ erDiagram
 
 ```mermaid
 erDiagram
-  **CANTILEVER_SHEAR_APP** ||--|| **user_params** : mapping
+  **CANTILEVER_SHEAR_APP** ||--|| **hard_params** : mapping
   **CANTILEVER_SHEAR_APP** ||--|| **user_paths** : mapping
   **CANTILEVER_SHEAR_APP** ||--|| **required_paths** : mapping
   **CANTILEVER_SHEAR_APP** ||--|| **output_paths** : mapping
-  **user_params** ||--|| **MeshProc** : mapping
+  **hard_params** ||--|| **MeshProc** : mapping
   **user_paths** ||--|| **MeshProc** : mapping
   **required_paths** ||--|| **MeshProc** : mapping
   **output_paths** ||--|| **MeshProc** : mapping
 
-  **user_params** {
-    int dim "dimension"
+  **hard_params** {
+    int dim "3"
   }
   **user_paths** {
     file mesh_settings_file "mesh_settings.json"
@@ -137,7 +133,7 @@ flowchart LR
 
     subgraph Parameters[<b>Parameters<b>]
       direction LR
-      param1["dimension <i>(int)<i>"]
+      param1["_"]
     end
   end
 
@@ -173,7 +169,7 @@ flowchart LR
 
     subgraph Parameters[<b>Parameters<b>]
       direction LR
-      param1["dimension <i>(int)<i>"]
+      param1["_"]
     end
   end
 
@@ -203,7 +199,7 @@ flowchart LR
 
     subgraph Parameters[<b>Parameters<b>]
       direction LR
-      param1["dimension <i>(int)<i>"]
+      param1["_"]
     end
 
   end
@@ -237,7 +233,7 @@ flowchart LR
 
     subgraph Parameters[<b>Parameters<b>]
       direction LR
-      param1["dimension <i>(int)<i>"]
+      param1["_"]
     end
 
   end
@@ -297,7 +293,9 @@ flowchart LR
 
 #### Parameters
 
-- **`dimension`:** Dimension of the geometry (`1` for a 1D line, `2` for a 2D rectangle, `3` for a 3D box).
+NA
+
+<!-- - **`dimension`:** Dimension of the geometry (`1` for a 1D line, `2` for a 2D rectangle, `3` for a 3D box). -->
 
 #### Paths
 

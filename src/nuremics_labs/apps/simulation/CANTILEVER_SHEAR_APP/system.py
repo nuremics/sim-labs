@@ -23,10 +23,8 @@ def main(
     workflow = [
         {
             "process": GeometryProc,
-            "user_params": {
-                "dim": "dimension",
-            },
             "hard_params": {
+                "dim": 3,
                 "length": 10.0,
                 "width": 1.0,
                 "height": 0.1,
@@ -37,8 +35,8 @@ def main(
         },
         {
             "process": LabelingProc,
-            "user_params": {
-                "dim": "dimension",
+            "hard_params": {
+                "dim": 3,
             },
             "required_paths": {
                 "infile": "geometry.brep",
@@ -49,8 +47,8 @@ def main(
         },
         {
             "process": MeshProc,
-            "user_params": {
-                "dim": "dimension",
+            "hard_params": {
+                "dim": 3,
             },
             "user_paths": {
                 "mesh_settings_file": "mesh_settings.json",
@@ -83,6 +81,7 @@ def main(
             },
             "user_paths": {
                 "mesh_settings_file": "mesh_settings.json",
+                "time_settings_file": "time_settings.json",
                 "solver_settings_file": "solver_settings.json",
             },
             "required_paths": {
@@ -111,15 +110,13 @@ def main(
             },
             "output_paths": {
                 "fig_file": "overall_comparisons.png",
+                "error_file": "overall_errors.csv",
             },
             "settings": {
                 "add": True,
                 "color": "red",
                 "linestyle": "-",
-                "linewidth": 2.0,
-                # "marker": "o",
-                # "markersize": 8,
-                # "markevery": 20,
+                "linewidth": 1.5,
                 "label": ""
             },
         },
@@ -129,7 +126,6 @@ def main(
     # Define default values of parameters #
     # ----------------------------------- #
     default_params = {
-        "dimension": 3,
         "mass": 5.0,
     }
 
