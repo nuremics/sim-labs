@@ -16,8 +16,9 @@ def main(
     poisson: float,
     mass: float,
     elem: str,
-    dt: float,
     ramp: float,
+    final_time: float,
+    dt: float,
     force: float,
     scheme: str,
     solver: str,
@@ -25,12 +26,11 @@ def main(
     silent: bool,
 ) -> None:
     
-    # Define timeline
-    final_time = 2.0*ramp
+    # Define number of steps
     nb_step = int(final_time/dt)
 
     # Define export frequency
-    nb_dump = 50
+    nb_dump = 100
     every_n_step = int(nb_step/nb_dump)
     if every_n_step == 0:
         every_n_step = 1
@@ -48,8 +48,8 @@ def main(
         poisson=poisson,
         force=force,
         elem=elem,
-        dt=dt,
         ramp=ramp,
+        dt=dt,
         every_n_step=every_n_step,
         scheme=scheme,
         solver=solver,
@@ -85,8 +85,8 @@ def createScene(
     poisson: float,
     mass: float,
     elem: str,
-    dt: float,
     ramp: float,
+    dt: float,
     every_n_step: int,
     force: float,
     scheme: str,

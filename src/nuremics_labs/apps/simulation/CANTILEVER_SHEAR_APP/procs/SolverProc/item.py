@@ -47,6 +47,7 @@ class SolverProc(Process):
 
     # Paths
     mesh_settings_file: Path = attrs.field(init=False, metadata={"input": True}, converter=Path)
+    time_settings_file: Path = attrs.field(init=False, metadata={"input": True}, converter=Path)
     solver_settings_file: Path = attrs.field(init=False, metadata={"input": True}, converter=Path)
     mesh_file: Path = attrs.field(init=False, metadata={"input": True}, converter=Path)
     model_file: Path = attrs.field(init=False, metadata={"input": True}, converter=Path)
@@ -80,6 +81,8 @@ class SolverProc(Process):
 
         with open(self.mesh_settings_file) as f:
             dict_mesh_settings = json.load(f)
+        with open(self.time_settings_file) as f:
+            dict_time_settings = json.load(f)
         with open(self.solver_settings_file) as f:
             self.dict_solver_settings = json.load(f)
 
@@ -96,8 +99,9 @@ class SolverProc(Process):
             poisson=self.poisson,
             force=self.force,
             elem=dict_mesh_settings["elem"],
+            ramp=dict_time_settings["ramp"],
+            final_time=dict_time_settings["final_time"],
             dt=self.dict_solver_settings["dt"],
-            ramp=self.dict_solver_settings["ramp"],
             scheme=self.dict_solver_settings["scheme"],
             solver=self.dict_solver_settings["solver"],
             results_path=self.outdir,

@@ -6,6 +6,7 @@
   <img src="https://img.shields.io/badge/meshio-5.3.5+-81ecec" />
   <img src="https://img.shields.io/badge/NumPy-2.4.2+-4dabcf?style=flat&logo=numpy&logoColor=white" />
   <img src="https://img.shields.io/badge/PyVista-0.47.1+-00b25e" />
+  <img src="https://img.shields.io/badge/SOFA Framework-25.6.0-e84e1c" />
 </p>
 
 ## Workflow
@@ -18,6 +19,9 @@
   A/ **`generate_mesh`:** Generate and export a computational mesh from a geometric model by discretizing the domain into mesh entities (nodes, elements) and assigning labeled physical groups.
 4. **[`ModelProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/ModelProc):** Convert a meshed geometry into a model object mapping geometric labels to mesh entities.<br>
   A/ **`build_model`:** Build a VTK-based model object from a meshed geometry by creating data fields that map physical groups to their corresponding nodes and elements.
+5. **[`SolverProc`](https://github.com/nuremics/sim-labs/tree/cantilever-shear/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/SolverProc):** Compute the mechanical deformation of a physical system under prescribed boundary conditions.<br>
+  A/ **`run_solver`:** Define the simulation setup, apply boundary conditions, and execute the solver to compute the raw mechanical response of the system.
+  B/ **`compile_solution`:** Compile the raw simulation results into a PVD format and compute the displacement field over the model.
 
 ```mermaid
 flowchart RL
@@ -25,10 +29,19 @@ flowchart RL
   Proc2[<b>LabelingProc<b>] e2@--2--o App
   Proc3[<b>MeshingProc<b>] e3@--3--o App
   Proc4[<b>ModelProc<b>] e4@--4--o App
-  Op11[<b>create_geometry<b>] e5@--A--o Proc1
-  Op21[<b>label_entities<b>] e6@--A--o Proc2
-  Op31[<b>generate_mesh<b>] e7@--A--o Proc3
-  Op41[<b>build_model<b>] e8@--A--o Proc4
+  Proc5[<b>SolverProc<b>] e5@--5--o App
+  Proc6[<b>PostProc<b>] e6@--6--o App
+  Proc7[<b>AnalysisProc<b>] e7@--7--o App
+  Op11[<b>create_geometry<b>] e8@--A--o Proc1
+  Op21[<b>label_entities<b>] e9@--A--o Proc2
+  Op31[<b>generate_mesh<b>] e10@--A--o Proc3
+  Op41[<b>build_model<b>] e11@--A--o Proc4
+  Op51[<b>run_solver<b>] e12@--A--o Proc5
+  Op52[<b>compile_solution<b>] e13@--B--o Proc5
+  Op61[<b>get_deflection<b>] e14@--A--o Proc6
+  Op62[<b>plot_deflection<b>] e15@--B--o Proc6
+  Op71[<b>plot_overall<b>] e16@--A--o Proc7
+  Op72[<b>summarize_overall_errors<b>] e17@--B--o Proc7
   e1@{ animate: true }
   e2@{ animate: true }
   e3@{ animate: true }
@@ -37,6 +50,15 @@ flowchart RL
   e6@{ animate: true }
   e7@{ animate: true }
   e8@{ animate: true }
+  e9@{ animate: true }
+  e10@{ animate: true }
+  e11@{ animate: true }
+  e12@{ animate: true }
+  e13@{ animate: true }
+  e14@{ animate: true }
+  e15@{ animate: true }
+  e16@{ animate: true }
+  e17@{ animate: true }
 ```
 
 ## Mapping
@@ -119,6 +141,42 @@ erDiagram
   }
 ```
 
+```mermaid
+erDiagram
+**CANTILEVER_SHEAR_APP** ||--|| **user_params** : mapping
+  **CANTILEVER_SHEAR_APP** ||--|| **hard_params** : mapping
+  **CANTILEVER_SHEAR_APP** ||--|| **user_paths** : mapping
+  **CANTILEVER_SHEAR_APP** ||--|| **required_paths** : mapping
+  **CANTILEVER_SHEAR_APP** ||--|| **output_paths** : mapping
+  **user_params** ||--|| **SolverProc** : mapping
+  **hard_params** ||--|| **SolverProc** : mapping
+  **user_paths** ||--|| **SolverProc** : mapping
+  **required_paths** ||--|| **SolverProc** : mapping
+  **output_paths** ||--|| **SolverProc** : mapping
+
+  **user_params** {
+    float mass "mass"
+  }
+  **hard_params** {
+    int dim "3"
+    float young "1.2e6"
+    float poisson "0.0"
+    float force "4.0"
+  }
+  **user_paths** {
+    file mesh_settings_file "mesh_settings.json"
+    file time_settings_file "time_settings.json"
+    file solver_settings_file "solver_settings.json"
+  }
+  **required_paths** {
+    file mesh_file "mesh.msh"
+    file model_file "model.vtk"
+  }
+  **output_paths** {
+    file outdir "solution"
+  }
+```
+
 ## I/O Interface
 
 ```mermaid
@@ -128,12 +186,14 @@ flowchart LR
 
     subgraph Paths[<b>Paths<b>]
       direction LR
-      path["mesh_settings.json <i>(file)<i>"]
+      path1["mesh_settings.json <i>(file)<i>"]
+      path2["time_settings.json <i>(file)<i>"]
+      path3["solver_settings.json <i>(file)<i>"]
     end
 
     subgraph Parameters[<b>Parameters<b>]
       direction LR
-      param1["_"]
+      param1["mass"]
     end
   end
 
@@ -143,6 +203,7 @@ flowchart LR
     proc2["LabelingProc"]
     proc3["MeshProc"]
     proc4["ModelProc"]
+    proc5["SolverProc"]
   end
 
   subgraph Outputs[<b>OUTPUTS<b>]
@@ -150,7 +211,8 @@ flowchart LR
     out1["geometry.brep <i>(file)<i>"]
     out2["labels.json <i>(file)<i>"]
     out3["mesh.msh <i>(file)<i>"]
-    out3["model.vtk <i>(file)<i>"]
+    out4["model.vtk <i>(file)<i>"]
+    out5["solution <i>(folder)<i>"]
   end
 
   Inputs --> App
@@ -228,7 +290,8 @@ flowchart LR
 
     subgraph Paths[<b>Paths<b>]
       direction LR
-      path1["labels.json <i>(file)<i>"]
+      path1["mesh_settings.json <i>(file)<i>"]
+      path2["labels.json <i>(file)<i>"]
     end
 
     subgraph Parameters[<b>Parameters<b>]
@@ -252,7 +315,7 @@ flowchart LR
   proc --> Outputs
 
   classDef blueBox fill:#d0e6ff,stroke:#339,stroke-width:1.5px;
-  class path1 blueBox;
+  class path2 blueBox;
 ```
 
 ```mermaid
@@ -289,17 +352,56 @@ flowchart LR
   class path1 blueBox;
 ```
 
+```mermaid
+flowchart LR
+  subgraph Inputs[<b>INPUTS<b>]
+    direction TB
+
+    subgraph Paths[<b>Paths<b>]
+      direction LR
+      path1["mesh_settings.json <i>(file)<i>"]
+      path2["time_settings.json <i>(file)<i>"]
+      path3["solver_settings.json <i>(file)<i>"]
+      path4["mesh.msh <i>(file)<i>"]
+      path5["model.vtk <i>(file)<i>"]
+    end
+
+    subgraph Parameters[<b>Parameters<b>]
+      direction LR
+      param1["mass"]
+    end
+
+  end
+
+  subgraph App[<b>CANTILEVER_SHEAR_APP<b>]
+    direction RL
+    proc["SolverProc"]
+  end
+
+  subgraph Outputs[<b>OUTPUTS<b>]
+    direction RL
+    out3["solution <i>(folder)<i>"]
+  end
+
+  Inputs --> proc
+  proc --> Outputs
+
+  classDef blueBox fill:#d0e6ff,stroke:#339,stroke-width:1.5px;
+  class path4 blueBox;
+  class path5 blueBox;
+```
+
 ### INPUTS
 
 #### Parameters
 
-NA
-
-<!-- - **`dimension`:** Dimension of the geometry (`1` for a 1D line, `2` for a 2D rectangle, `3` for a 3D box). -->
+- **`mass`:** Mass of the material.
 
 #### Paths
 
 - **`mesh_settings.json`:** File containing the mesh discretization settings.
+- **`time_settings.json`:** File containing the time settings.
+- **`solver_settings.json`:** File containing the solver settings.
 
 ### OUTPUTS
 
@@ -307,3 +409,4 @@ NA
 - **`labels.json`:** File containing the labeled geometric entities.
 - **`mesh.msh`:** File containing the computational mesh (exported in Gmsh format).
 - **`model.vtk`:** File containing the model object.
+- **`solution`:** Directory containing the simulation results.
