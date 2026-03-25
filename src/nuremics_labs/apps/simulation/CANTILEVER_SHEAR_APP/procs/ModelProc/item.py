@@ -1,8 +1,9 @@
 import os
-import attrs
 from pathlib import Path
 
+import attrs
 from nuremics import Process
+
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.ModelProc.ops import (
     build_model,
 )
@@ -43,12 +44,12 @@ class ModelProc(Process):
     # Outputs
     outfile: Path = attrs.field(init=False, metadata={"output": True}, converter=Path)
 
-    def __call__(self):
+    def __call__(self) -> None:
         super().__call__()
 
         self.build_model()
 
-    def build_model(self):
+    def build_model(self) -> None:
         """
         Build a VTK-based model object from a meshed geometry by creating
         data fields that map physical groups to their corresponding 

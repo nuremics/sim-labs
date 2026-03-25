@@ -1,7 +1,7 @@
 import re
 
-import pyvista as pv
 import numpy as np
+import pyvista as pv
 
 
 def build_model(
@@ -65,13 +65,13 @@ def _get_gmsh_physical_groups(
 
     for i, line in enumerate(lines):
         if "$PhysicalNames" in line:
-            id_init = i+2
-            nb_physical_groups = int(lines[i+1])
+            id_init = i + 2
+            nb_physical_groups = int(lines[i + 1])
             break
     
     dict_physical_groups = {}
     for i in range(nb_physical_groups):
-        list_line = lines[id_init+i].split(" ")
+        list_line = lines[id_init + i].split(" ")
         match = re.search(r'"(.*?)"', list_line[2])
         key = match.group(1)
         dict_physical_groups[key] = [int(list_line[0]), int(list_line[1])]
@@ -87,7 +87,7 @@ def _tag_boundary_conditions_nodes(
 ) -> None:
     
     mask = ugrid.cell_data["gmsh:physical"] == dict_physical_groups[group][1]
-    ids = np.where(mask == True)[0].tolist()
+    ids = np.where(mask)[0].tolist()
     for i in ids:
         for j in ugrid.get_cell(i).point_ids:
             if dict_physical_groups[group][0] == 0:
