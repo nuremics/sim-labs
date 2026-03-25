@@ -8,6 +8,7 @@ from nuremics_labs.deps.plotting import (
     plot_xy,
 )
 
+
 def get_deflection(
     model_file: str,
     solution_dir: Path,
@@ -17,7 +18,7 @@ def get_deflection(
     mesh0: pv.UnstructuredGrid = pv.read(model_file)
 
     mask = mesh0.point_data["Load"] == 1
-    ids_load = np.where(mask == True)[0].tolist()
+    ids_load = np.where(mask)[0].tolist()
 
     reader = pv.get_reader(str(solution_dir / "solution.pvd"))
     times = reader.time_values
@@ -39,16 +40,16 @@ def get_deflection(
         
         for id in ids_load:
             
-            u_tip += np.abs(mesh.point_data["Displacement"][id, 0])/len(ids_load)
-            w_tip += np.abs(mesh.point_data["Displacement"][id, 2])/len(ids_load)
+            u_tip += np.abs(mesh.point_data["Displacement"][id, 0]) / len(ids_load)
+            w_tip += np.abs(mesh.point_data["Displacement"][id, 2]) / len(ids_load)
         
         df.at[i, "Force"] /= 4.0
         df.at[i, "Utip"] = round(u_tip, 3)
         df.at[i, "Wtip"] = round(w_tip, 3)
         df.at[i, "Utip_ref"] = 3.286
         df.at[i, "Wtip_ref"] = 6.698
-        df.at[i, "Error_Utip"] = 100.0*np.abs(df.at[i, "Utip"]-df.at[i, "Utip_ref"])/df.at[i, "Utip_ref"]
-        df.at[i, "Error_Wtip"] = 100.0*np.abs(df.at[i, "Wtip"]-df.at[i, "Wtip_ref"])/df.at[i, "Wtip_ref"]
+        df.at[i, "Error_Utip"] = 100.0 * np.abs(df.at[i, "Utip"] - df.at[i, "Utip_ref"]) / df.at[i, "Utip_ref"]
+        df.at[i, "Error_Wtip"] = 100.0 * np.abs(df.at[i, "Wtip"] - df.at[i, "Wtip_ref"]) / df.at[i, "Wtip_ref"]
     
     df.to_excel(
         excel_writer=data_file,

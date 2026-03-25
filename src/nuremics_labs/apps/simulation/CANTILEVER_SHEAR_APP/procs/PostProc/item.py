@@ -1,13 +1,13 @@
 import os
-import attrs
 from pathlib import Path
 
+import attrs
 import pandas as pd
-
 from nuremics import Process
+
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.PostProc.ops import (
-   get_deflection,
-   plot_deflection,
+    get_deflection,
+    plot_deflection,
 )
 
 
@@ -54,13 +54,13 @@ class PostProc(Process):
     # Internal
     df_metrics: pd.DataFrame = attrs.field(init=False)
 
-    def __call__(self):
+    def __call__(self) -> None:
         super().__call__()
 
         self.get_deflection()
         self.plot_deflection()
 
-    def get_deflection(self):
+    def get_deflection(self) -> None:
         """
         Extract the displacement at the extremity of the object from raw 
         simulation results and save it to a metric data file.
@@ -82,7 +82,7 @@ class PostProc(Process):
             data_file=self.data_file,
         )
 
-    def plot_deflection(self):
+    def plot_deflection(self) -> None:
         """
         Plot the displacement metric over time.
 
