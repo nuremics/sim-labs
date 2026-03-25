@@ -1,11 +1,13 @@
 import sys
 
-from OCC.Core.gp import gp_Pnt
-from OCC.Core.BRepBuilderAPI import BRepBuilderAPI_MakeEdge
-from OCC.Core.BRepBuilderAPI import BRepBuilderAPI_MakeWire
-from OCC.Core.BRepBuilderAPI import BRepBuilderAPI_MakeFace
+from OCC.Core.BRepBuilderAPI import (
+    BRepBuilderAPI_MakeEdge,
+    BRepBuilderAPI_MakeFace,
+    BRepBuilderAPI_MakeWire,
+)
 from OCC.Core.BRepPrimAPI import BRepPrimAPI_MakeBox
 from OCC.Core.BRepTools import breptools
+from OCC.Core.gp import gp_Pnt
 from OCC.Core.TopoDS import TopoDS_Shape
 
 
@@ -15,7 +17,7 @@ def create_geometry(
     width: float,
     height: float,
     outfile: str,
-):
+) -> None:
     """
     Create and export a simple geometric entity (1D line, 2D rectangle or 3D box)
     in BREP format.

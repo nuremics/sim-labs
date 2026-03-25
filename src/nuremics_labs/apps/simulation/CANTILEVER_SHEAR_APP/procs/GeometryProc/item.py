@@ -1,8 +1,9 @@
 import os
-import attrs
 from pathlib import Path
 
+import attrs
 from nuremics import Process
+
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.GeometryProc.ops import (
     create_geometry,
 )
@@ -48,12 +49,12 @@ class GeometryProc(Process):
     # Outputs
     outfile: Path = attrs.field(init=False, metadata={"output": True}, converter=Path)
 
-    def __call__(self):
+    def __call__(self) -> None:
         super().__call__()
 
         self.create_geometry()
 
-    def create_geometry(self):
+    def create_geometry(self) -> None:
         """
         Create and export a simple geometric entity (1D line, 2D rectangle or 3D box)
         in BREP format.
