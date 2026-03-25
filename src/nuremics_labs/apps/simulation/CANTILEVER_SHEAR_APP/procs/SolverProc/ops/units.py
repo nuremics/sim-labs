@@ -1,6 +1,6 @@
+import glob
 import os
 import re
-import glob
 import shutil
 from pathlib import Path
 
@@ -60,7 +60,7 @@ def compile_solution(
     output_path: Path,
 ) -> None:
 
-    def _extract_number(filename):
+    def _extract_number(filename: str) -> int:
         match = re.search(r'solution(\d+)\.vtu$', filename)
         return int(match.group(1)) if match else -1
 
@@ -78,7 +78,7 @@ def compile_solution(
 
     for timestep, vtu_file in enumerate(results):
         # Add .vtu file with a time step
-        t = timestep*dt
+        t = timestep * dt
         pvd_content += f'    <DataSet timestep="{t}" group="" part="0" file="dump/{os.path.basename(vtu_file)}"/>\n'
 
     pvd_content += '  </Collection>\n'

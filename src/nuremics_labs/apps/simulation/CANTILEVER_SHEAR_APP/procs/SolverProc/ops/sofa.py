@@ -1,12 +1,11 @@
-import Sofa
-import SofaImGui
-import Sofa.Gui
-
 import os
+
 import numpy as np
 import pandas as pd
 import pyvista as pv
-from typing import Any
+import Sofa
+import Sofa.Gui
+import SofaImGui  # noqa: F401
 
 
 def main(
@@ -27,11 +26,11 @@ def main(
 ) -> None:
     
     # Define number of steps
-    nb_step = int(final_time/dt)
+    nb_step = int(final_time / dt)
 
     # Define export frequency
     nb_dump = 100
-    every_n_step = int(nb_step/nb_dump)
+    every_n_step = int(nb_step / nb_dump)
     if every_n_step == 0:
         every_n_step = 1
 
@@ -78,7 +77,7 @@ def main(
 
 
 def createScene(
-    root: Any,
+    root: Sofa.Core.Node,
     mesh_file: str,
     model_file: str,
     young: float,
@@ -92,15 +91,15 @@ def createScene(
     scheme: str,
     solver: str,
     dump_path: str,
-):
+) -> None:
 
     mesh = pv.read(model_file)
 
     mask = mesh.point_data["Constraint"] == 1
-    ids_constraint = np.where(mask == True)[0].tolist()
+    ids_constraint = np.where(mask)[0].tolist()
 
     mask = mesh.point_data["Load"] == 1
-    ids_load = np.where(mask == True)[0].tolist()
+    ids_load = np.where(mask)[0].tolist()
 
     root.gravity = [0.0, 0.0, 0.0]
     root.dt = dt
@@ -243,7 +242,7 @@ def createScene(
 
 class TimeDependentLoad(Sofa.Core.Controller):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: object, **kwargs: object) -> None:
         
         Sofa.Core.Controller.__init__(self, *args, **kwargs)
         
@@ -260,15 +259,15 @@ class TimeDependentLoad(Sofa.Core.Controller):
         )
         self.dump_id = 0 
 
-    def onAnimateBeginEvent(self, event):
+    def onAnimateBeginEvent(self, event: object) -> None:
         
         current_time = self.node.time.value
         self.updateLoad(current_time)
 
-    def updateLoad(self, current_time):
+    def updateLoad(self, current_time: float) -> None:
         
         if current_time <= self.ramp:
-            self.load.totalForce = [0.0, 0.0, self.force*current_time/self.ramp]
+            self.load.totalForce = [0.0, 0.0, self.force * current_time / self.ramp]
         else:
             self.load.totalForce = [0.0, 0.0, self.force]
 

@@ -1,12 +1,13 @@
-import os
-import attrs
 import json
+import os
 from pathlib import Path
 
+import attrs
 from nuremics import Process
+
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.SolverProc.ops import (
-   run_solver,
-   compile_solution,
+    compile_solution,
+    run_solver,
 )
 
 
@@ -75,13 +76,13 @@ class SolverProc(Process):
     # Internal
     dict_solver_settings: dict = attrs.field(init=False)
 
-    def __call__(self):
+    def __call__(self) -> None:
         super().__call__()
 
         self.run_solver()
         self.compile_solution()
 
-    def run_solver(self):
+    def run_solver(self) -> None:
         """
         Compute the mechanical deformation of a physical system under prescribed 
         boundary conditions.
@@ -127,7 +128,7 @@ class SolverProc(Process):
             silent=True,
         )
 
-    def compile_solution(self):
+    def compile_solution(self) -> None:
         """
         Compile the raw simulation results into a PVD format and compute 
         the displacement field over the model.
