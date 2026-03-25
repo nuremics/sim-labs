@@ -245,7 +245,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/six-1.17.0-pyhe01879c_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/snappy-1.2.2-h03e3b7b_1.conda
       - conda: https://prefix.dev/sofa-framework/linux-64/sofa-app-25.06.00-h12aa6ae_5.conda
-      - conda: https://prefix.dev/sofa-framework/linux-64/sofa-beamadapter-25.06.00-h49db7fd_5.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/sofa-devel-25.06.00-h0434f13_4.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/sofa-gl-25.06.00-hb2c94f6_4.conda
       - conda: https://prefix.dev/sofa-framework/linux-64/sofa-glfw-25.06.00-py313h9a76723_10.conda
@@ -509,7 +508,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/six-1.17.0-pyhe01879c_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/snappy-1.2.2-h01f5ddf_1.conda
       - conda: https://prefix.dev/sofa-framework/osx-64/sofa-app-25.06.00-hdef9ef4_5.conda
-      - conda: https://prefix.dev/sofa-framework/osx-64/sofa-beamadapter-25.06.00-h9807af4_5.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/sofa-devel-25.06.00-hafca672_4.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/sofa-gl-25.06.00-h38fbc50_4.conda
       - conda: https://prefix.dev/sofa-framework/osx-64/sofa-glfw-25.06.00-py312hf6c79fb_10.conda
@@ -747,7 +745,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/six-1.17.0-pyhe01879c_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/snappy-1.2.2-hada39a4_1.conda
       - conda: https://prefix.dev/sofa-framework/osx-arm64/sofa-app-25.06.00-h397a7b4_5.conda
-      - conda: https://prefix.dev/sofa-framework/osx-arm64/sofa-beamadapter-25.06.00-hb33852e_5.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/sofa-devel-25.06.00-h0f4b8a3_4.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/sofa-gl-25.06.00-hcd9b3ad_4.conda
       - conda: https://prefix.dev/sofa-framework/osx-arm64/sofa-glfw-25.06.00-py313hb6e6ac4_10.conda
@@ -957,7 +954,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/six-1.17.0-pyhe01879c_1.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/snappy-1.2.2-h7fa0ca8_1.conda
       - conda: https://prefix.dev/sofa-framework/win-64/sofa-app-25.06.00-ha1acdad_5.conda
-      - conda: https://prefix.dev/sofa-framework/win-64/sofa-beamadapter-25.06.00-h834c984_5.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/sofa-devel-25.06.00-hfb79adf_4.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/sofa-gl-25.06.00-h9e1e609_4.conda
       - conda: https://prefix.dev/sofa-framework/win-64/sofa-glfw-25.06.00-py313h293575e_10.conda
@@ -13362,52 +13358,6 @@ packages:
   license: GPL-2.0-or-later
   size: 40770945
   timestamp: 1771332223059
-- conda: https://prefix.dev/sofa-framework/linux-64/sofa-beamadapter-25.06.00-h49db7fd_5.conda
-  sha256: 8e9ba6a08b1bb902ffc75beca3c9f8057c157553ea8c4854dbb8477d0c67533f
-  md5: ba21f77d303b96eb8e2f7c08a304c9ad
-  depends:
-  - sofa-devel 25.6.*
-  - __glibc >=2.17,<3.0.a0
-  - libstdcxx >=14
-  - libgcc >=14
-  - libsofa >=25.6.0,<25.6.1.0a0
-  license: LGPL-2.1-or-later
-  size: 1824114
-  timestamp: 1771318163565
-- conda: https://prefix.dev/sofa-framework/osx-64/sofa-beamadapter-25.06.00-h9807af4_5.conda
-  sha256: e44104c120a8dd8a81a067733c07034031c9e180bf96bdf62f2b4bb89564dc52
-  md5: 4728f6bdcb23f3e8e8a0696aaf290921
-  depends:
-  - sofa-devel 25.6.*
-  - libcxx >=19
-  - __osx >=11.0
-  - libsofa >=25.6.0,<25.6.1.0a0
-  license: LGPL-2.1-or-later
-  size: 1512889
-  timestamp: 1771318213322
-- conda: https://prefix.dev/sofa-framework/osx-arm64/sofa-beamadapter-25.06.00-hb33852e_5.conda
-  sha256: 421e2fcfa7307524bf6f5d08cfe5fe3dd3315d3b5eccef86bc2bfcca1f0103f3
-  md5: 9c69d3e1410d748c7431138216f10ab4
-  depends:
-  - sofa-devel 25.6.*
-  - libcxx >=19
-  - __osx >=11.0
-  - libsofa >=25.6.0,<25.6.1.0a0
-  license: LGPL-2.1-or-later
-  size: 1474266
-  timestamp: 1771318165756
-- conda: https://prefix.dev/sofa-framework/win-64/sofa-beamadapter-25.06.00-h834c984_5.conda
-  sha256: 85a649603042091fab9e95e2732492409ad91c1b6faa387be12087ada06e12fa
-  md5: 89a8c66772f125646298702297ca2dcb
-  depends:
-  - sofa-devel 25.6.*
-  - vc >=14.3,<15
-  - vc14_runtime >=14.44.35208
-  - ucrt >=10.0.20348.0
-  - libsofa >=25.6.0,<25.6.1.0a0
-  license: LGPL-2.1-or-later
-  size: 1357312
-  timestamp: 1771318269852
 - conda: https://conda.anaconda.org/conda-forge/linux-64/sofa-devel-25.06.00-h0434f13_4.conda
   sha256: 745a0afa2163e8ad3eea84a8ae760d4ad4c6f4134b97d4b89546a296928bb996
   md5: a26705f145cba9b477f75eded50aa549
