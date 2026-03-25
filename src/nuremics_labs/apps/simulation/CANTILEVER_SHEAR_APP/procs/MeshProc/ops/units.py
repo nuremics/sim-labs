@@ -1,4 +1,5 @@
 import json
+
 import gmsh
 
 
@@ -68,11 +69,11 @@ def generate_mesh(
     gmsh.model.occ.synchronize()
 
     # Define discretization
-    num_nodes_length = nb_elem_length+1
+    num_nodes_length = nb_elem_length + 1
     if dim > 1:
-        num_nodes_width = nb_elem_width+1
+        num_nodes_width = nb_elem_width + 1
     if dim == 3:
-        num_nodes_height = nb_elem_height+1
+        num_nodes_height = nb_elem_height + 1
 
     # Define mesh
     if dim == 3:

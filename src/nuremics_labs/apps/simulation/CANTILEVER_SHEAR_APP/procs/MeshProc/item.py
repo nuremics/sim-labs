@@ -1,9 +1,10 @@
-import os
-import attrs
 import json
+import os
 from pathlib import Path
 
+import attrs
 from nuremics import Process
+
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.MeshProc.ops import (
     generate_mesh,
 )
@@ -53,12 +54,12 @@ class MeshProc(Process):
     # Outputs
     outfile: Path = attrs.field(init=False, metadata={"output": True}, converter=Path)
 
-    def __call__(self):
+    def __call__(self) -> None:
         super().__call__()
 
         self.generate_mesh()
 
-    def generate_mesh(self):
+    def generate_mesh(self) -> None:
         """
         Generate and export a computational mesh from a geometric model 
         by discretizing the domain into mesh entities (nodes, elements)
