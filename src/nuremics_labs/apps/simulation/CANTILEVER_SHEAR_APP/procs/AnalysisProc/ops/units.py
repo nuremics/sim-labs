@@ -14,31 +14,6 @@ def plot_overall(
     settings: dict,
     filename: str,
 ) -> None:
-    """
-    Generate overall comparative plots of simulated (model) and theoritical trajectories.
-
-    This function loads (x, y) trajectory data from a results file ("results.xlsx")
-    and compares the model prediction to the theoretical reference for multiple 
-    scenarios.
-
-    Parameters
-    ----------
-    output : dict (containing output path to analyze for each case)
-        Each path should contain a 'results.xlsx' file with the columns:
-        - 'x_theory', 'y_theory': Theoretical trajectory coordinates.
-        - 'x_model', 'y_model': Model/simulated trajectory coordinates.
-    
-    settings : dict (containing analysis settings for each case)
-        Each entry must contain:
-        - 'add'   (bool): Whether to include the case in the plot.
-        - 'line'  (str) : Line style used for plotting the model trajectory.
-        - 'label' (str) : Label for the legend; if set to "Model", the case name is used.
-    
-    filename : str
-        Path to the file where the generated plot image will be saved (PNG format recommended).
-    silent : bool (default is False)
-        If False, displays the plot interactively using a window (e.g. for inspection).
-    """
 
     list_plots = [
         {
@@ -130,38 +105,13 @@ def summarize_overall_errors(
     settings: dict,
     filename: str,
 ) -> None:
-    """
-    Generate overall comparative plots of simulated (model) and theoritical trajectories.
-
-    This function loads (x, y) trajectory data from a results file ("results.xlsx")
-    and compares the model prediction to the theoretical reference for multiple 
-    scenarios.
-
-    Parameters
-    ----------
-    output : dict (containing output path to analyze for each case)
-        Each path should contain a 'results.xlsx' file with the columns:
-        - 'x_theory', 'y_theory': Theoretical trajectory coordinates.
-        - 'x_model', 'y_model': Model/simulated trajectory coordinates.
-    
-    settings : dict (containing analysis settings for each case)
-        Each entry must contain:
-        - 'add'   (bool): Whether to include the case in the plot.
-        - 'line'  (str) : Line style used for plotting the model trajectory.
-        - 'label' (str) : Label for the legend; if set to "Model", the case name is used.
-    
-    filename : str
-        Path to the file where the generated plot image will be saved (PNG format recommended).
-    silent : bool (default is False)
-        If False, displays the plot interactively using a window (e.g. for inspection).
-    """
 
     rows = []
     
     # Browse output for each case
     for case, out in output.items():
 
-        # Load results from Excel file
+        # Load metrics from Excel file
         df = pd.read_excel(Path(out))
 
         rows.append({

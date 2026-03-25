@@ -14,22 +14,29 @@ from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.AnalysisProc.ops i
 @attrs.define
 class AnalysisProc(Process):
     """
-    Perform overall comparisons between simulated (model) and theoretical trajectories.
+    Analyze the results of multiple simulation runs to identify trends, compare metrics,
+    and draw conclusions.
 
     Pipeline
     --------
-        A/ plot_overall_model_vs_theory
-            Generate overall comparative plots of simulated (model) and theoritical trajectories.
+        A/ plot_overall
+            Visualize and compare the metrics of the various simulation runs on a single plot.
+        B/ summarize_overall_errors
+            Compile and summarize the deviations between computed simulation results and 
+            reference solutions for all performed tests.
 
     Analysis
     --------
-        - comp_folder : folder
-            'results.xlsx' : File containing both trajectories.
+        data_file : xlsx
+            File containing the computed displacement metric.
 
     Outputs
     -------
         fig_file : png
-            Image containing overall comparative plots.
+            File containing the visual comparisons of the metrics for the various
+            simulation runs.
+        error_file : csv
+            File summarizing the obtained errors across all simulation runs.
     """
 
     # Analysis
@@ -51,11 +58,11 @@ class AnalysisProc(Process):
     
     def plot_overall(self) -> None:
         """
-        Generate overall comparative plots of simulated (model) and theoritical trajectories.
+        Visualize and compare the metrics of the various simulation runs on a single plot.
 
         Uses
         ----
-            comp_folder
+            data_file
 
         Generates
         ---------
@@ -70,15 +77,16 @@ class AnalysisProc(Process):
     
     def summarize_overall_errors(self) -> None:
         """
-        Generate overall comparative plots of simulated (model) and theoritical trajectories.
+        Compile and summarize the deviations between computed simulation results and 
+        reference solutions for all performed tests.
 
         Uses
         ----
-            comp_folder
+            data_file
 
         Generates
         ---------
-            fig_file
+            error_file
         """
 
         self.process_output(
@@ -99,16 +107,17 @@ if __name__ == "__main__":
     working_dir = Path(r"...")
 
     # Analysis
-    comp_folder = "comparison"
+    data_file = "metrics.xlsx"
 
     # Output paths
     fig_file = "overall_comparisons.png"
+    error_file = "overall_errors.csv"
 
     # Paths file
-    paths_file = Path(r"...") / ".paths.json"
+    paths_file = working_dir.parents[0] / ".paths.json"
 
     # Analysis file
-    analysis_file = Path(r"...") / "analysis.json"
+    analysis_file = working_dir.parents[0] / "analysis.json"
 
     # ================================================================== #
 
@@ -117,15 +126,17 @@ if __name__ == "__main__":
 
     # Create dictionary containing input data
     dict_inputs = {
-        "comp_folder": comp_folder,
+        "data_file": data_file,
         "fig_file": fig_file,
+        "error_file": error_file,
     }
     
     # Create process
-    process = TrajectoryAnalysisProc(
+    process = AnalysisProc(
         dict_inputs=dict_inputs,
         set_inputs=True,
     )
+    process.name = process.__class__.__name__
     process.is_case = False
 
     # Get dictionary of paths

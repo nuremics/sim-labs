@@ -47,6 +47,7 @@ MeshProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/proc
 ModelProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/ModelProc/item.py"
 SolverProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/SolverProc/item.py"
 PostProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/PostProc/item.py"
+AnalysisProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/AnalysisProc/item.py"
 
 [environments]
 demo = ["DEMO_APP"]
