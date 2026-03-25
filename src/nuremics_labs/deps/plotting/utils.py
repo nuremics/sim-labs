@@ -1,6 +1,6 @@
-import numpy as np
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 from PIL import Image
@@ -99,24 +99,8 @@ def plot_xy(
     size: tuple,
     save_pdf: str = None,
     save_png: str = None,
-):
-    """
-    Plots two columns from a DataFrame as x and y axes.
+) -> None:
 
-    Parameters:
-    df (pd.DataFrame): The pandas DataFrame containing the data.
-    x_column (str): The name of the column to be used as the x-axis.
-    y_column (str): The name of the column to be used as the y-axis.
-    title (str): The title of the plot.
-    x_label (str): The label for the x-axis.
-    y_label (str): The label for the y-axis.
-    legend_label (str, optional): The label for the legend. If None, no legend is displayed.
-    save_pdf (str, optional): The file name for saving the plot as a PDF. If None, the plot is not saved as a PDF.
-    save_png (str, optional): The file name for saving the plot as a PNG. If None, the plot is not saved as a PNG.
-
-    Returns:
-    None
-    """
     fig, ax = plt.subplots(config[0], config[1])
     ax = np.atleast_1d(ax).ravel()
     fig.set_size_inches(size[0], size[1])

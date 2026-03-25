@@ -2,13 +2,15 @@ from typing import Optional
 
 from nuremics import Application
 
-from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import GeometryProc
-from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import LabelingProc
-from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import MeshProc
-from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import ModelProc
-from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import SolverProc
-from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import PostProc
-from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import AnalysisProc
+from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs import (
+    AnalysisProc,
+    GeometryProc,
+    LabelingProc,
+    MeshProc,
+    ModelProc,
+    PostProc,
+    SolverProc,
+)
 
 APP_NAME = "CANTILEVER_SHEAR_APP"
 
