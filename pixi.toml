@@ -45,8 +45,7 @@ GeometryProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/
 LabelingProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/LabelingProc/item.py"
 MeshProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/MeshProc/item.py"
 ModelProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/ModelProc/item.py"
-SOFA = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/SolverProc/ops/sofa.py"
-test = "python test.py"
+SolverProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/SolverProc/item.py"
 
 [environments]
 demo = ["DEMO_APP"]

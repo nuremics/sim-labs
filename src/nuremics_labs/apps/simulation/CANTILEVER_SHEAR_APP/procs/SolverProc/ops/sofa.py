@@ -282,7 +282,6 @@ class TimeDependentLoad(Sofa.Core.Controller):
             self.dump_id += self.every_n_step
 
 
-# Function used only if this script is called from a python environment
 if __name__ == '__main__':
 
     mesh_file = r"..."

@@ -44,8 +44,8 @@ erDiagram
 ## Input Parameter(s)
 
 - **`mass`:** Mass of the material.
-- **`young`:** Young’s modulus of the material. 
-- **`poisson`:** Poisson’s ratio of the material.
+- **`young`:** Young's modulus of the material. 
+- **`poisson`:** Poisson's ratio of the material.
 - **`force`:** Magnitude of the external force applied to the system as a boundary condition.
 
 ## Input Path(s)

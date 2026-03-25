@@ -13,30 +13,47 @@ from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.SolverProc.ops imp
 @attrs.define
 class SolverProc(Process):
     """
-    Convert a meshed geometry into a model object mapping geometric labels
-    to mesh entities.
+    Compute the mechanical deformation of a physical system under prescribed 
+    boundary conditions.
 
     Process
     -------
-        A/ build_model
-            Build a VTK-based model object from a meshed geometry by creating
-            data fields that map physical groups to their corresponding 
-            nodes and elements.
+        A/ run_solver: 
+            Define the simulation setup, apply boundary conditions, and execute 
+            the solver to compute the raw simulation results.
+        B/ compile_solution:
+            Compile the raw simulation results into a PVD format and compute 
+            the displacement field over the model.
 
     Input parameters
     ----------------
-        NA
+        mass: float
+            Mass of the material.
+        young: float
+            Young's modulus of the material. 
+        poisson: float
+            Poisson's ratio of the material.
+        force: float
+            Magnitude of the external force applied to the system as a
+            boundary condition.
 
     Input paths
     -----------
-        infile : msh
-            File containing the meshed geometry and physical group definitions
-            (in Gmsh format).
+        mesh_settings_file: json
+            File containing the mesh discretization settings.
+        time_settings_file: json
+            File containing the time settings.
+        solver_settings_file: json
+            File containing the solver settings.
+        mesh_file: msh
+            File containing the meshed geometry and physical group definitions (in Gmsh format).
+        model_file: vtk
+            File containing the model object.
 
     Outputs
     -------
-        outfile : vtk
-            File containing the model object.
+        outdir: folder
+            Directory containing the simulation results.
     """
 
     # Parameters
@@ -66,17 +83,19 @@ class SolverProc(Process):
 
     def run_solver(self):
         """
-        Build a VTK-based model object from a meshed geometry by creating
-        data fields that map physical groups to their corresponding 
-        nodes and elements.
+        Compute the mechanical deformation of a physical system under prescribed 
+        boundary conditions.
 
         Uses
         ----
-            infile
+            mesh_settings_file
+            time_settings_file
+            solver_settings_file
         
         Generates
         ---------
-            outfile
+            outdir
+            dict_solver_settings
         """
 
         with open(self.mesh_settings_file) as f:
@@ -110,17 +129,16 @@ class SolverProc(Process):
 
     def compile_solution(self):
         """
-        Build a VTK-based model object from a meshed geometry by creating
-        data fields that map physical groups to their corresponding 
-        nodes and elements.
+        Compile the raw simulation results into a PVD format and compute 
+        the displacement field over the model.
 
         Uses
         ----
-            infile
+            dict_solver_settings
         
         Generates
         ---------
-            outfile
+            outdir
         """
 
         compile_solution(
@@ -141,13 +159,20 @@ if __name__ == "__main__":
     working_dir = Path(r"...")
 
     # Input parameters
-    # NA
+    mass = 5.0
+    young = 1.2e6
+    poisson = 0.0
+    force = 4.0
 
     # Input paths
-    infile = Path(r"...")
+    mesh_settings_file = Path(r"...")
+    time_settings_file = Path(r"...")
+    solver_settings_file = Path(r"...")
+    mesh_file = Path(r"...")
+    model_file = Path(r"...")
 
     # Output paths
-    outfile = "model.vtk"
+    outdir = "solution"
 
     # ================================================================== #
 
@@ -156,12 +181,20 @@ if __name__ == "__main__":
 
     # Create dictionary containing input data
     dict_inputs = {
-        "infile": infile,
-        "outfile": outfile,
+        "mass": mass,
+        "young": young,
+        "poisson": poisson,
+        "force": force,
+        "mesh_settings_file": mesh_settings_file,
+        "time_settings_file": time_settings_file,
+        "solver_settings_file": solver_settings_file,
+        "mesh_file": mesh_file,
+        "model_file": model_file,
+        "outdir": outdir,
     }
 
     # Create process
-    process = ModelProc(
+    process = SolverProc(
         dict_inputs=dict_inputs,
         set_inputs=True,
     )

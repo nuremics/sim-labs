@@ -26,21 +26,7 @@ def run_solver(
     results_path: Path,
     silent: bool,
 ) -> None:
-    """
-    Build a VTK-based model object from a meshed geometry by creating
-    data fields that map physical groups to their corresponding nodes 
-    and elements.
 
-    Parameters
-    ----------
-    infile : str
-        Path to the mesh file (in Gmsh format) containing the meshed 
-        geometry and physical group definitions.
-    outfile : str
-        Path to the model object (exported in VTK format).
-    """
-
-    # Create folder to dump results
     dump_path = results_path / "dump"
     if dump_path.exists():
         shutil.rmtree(dump_path) 
