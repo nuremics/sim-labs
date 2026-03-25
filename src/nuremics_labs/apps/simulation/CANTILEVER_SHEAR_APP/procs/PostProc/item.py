@@ -1,6 +1,5 @@
 import os
 import attrs
-import json
 from pathlib import Path
 
 import pandas as pd
@@ -15,15 +14,15 @@ from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.PostProc.ops impor
 @attrs.define
 class PostProc(Process):
     """
-    Convert a meshed geometry into a model object mapping geometric labels
-    to mesh entities.
+    Post-process simulation results to extract relevant metrics.
 
     Process
     -------
-        A/ build_model
-            Build a VTK-based model object from a meshed geometry by creating
-            data fields that map physical groups to their corresponding 
-            nodes and elements.
+        A/ get_deflection
+            Extract the displacement at the extremity of the object from raw 
+            simulation results and save it to a metric data file.
+        B/ plot_deflection
+            Plot the displacement metric over time.
 
     Input parameters
     ----------------
@@ -31,14 +30,17 @@ class PostProc(Process):
 
     Input paths
     -----------
-        infile : msh
-            File containing the meshed geometry and physical group definitions
-            (in Gmsh format).
+        model_file : vtk
+            File containing the model object.
+        solution_dir : folder
+            Directory containing the simulation results.
 
     Outputs
     -------
-        outfile : vtk
-            File containing the model object.
+        data_file : xlsx
+            File containing the computed displacement metric.
+        fig_file : png
+            File containing the visual representation of the displacement metric.
     """
 
     # Paths
@@ -50,7 +52,7 @@ class PostProc(Process):
     fig_file: Path = attrs.field(init=False, metadata={"output": True}, converter=Path)
 
     # Internal
-    df_results: pd.DataFrame = attrs.field(init=False)
+    df_metrics: pd.DataFrame = attrs.field(init=False)
 
     def __call__(self):
         super().__call__()
@@ -60,20 +62,21 @@ class PostProc(Process):
 
     def get_deflection(self):
         """
-        Build a VTK-based model object from a meshed geometry by creating
-        data fields that map physical groups to their corresponding 
-        nodes and elements.
+        Extract the displacement at the extremity of the object from raw 
+        simulation results and save it to a metric data file.
 
         Uses
         ----
-            infile
+            model_file
+            solution_dir
         
         Generates
         ---------
-            outfile
+            df_metrics
+            data_file
         """
 
-        self.df_results = get_deflection(
+        self.df_metrics = get_deflection(
             model_file=str(self.model_file),
             solution_dir=self.solution_dir,
             data_file=self.data_file,
@@ -81,21 +84,19 @@ class PostProc(Process):
 
     def plot_deflection(self):
         """
-        Build a VTK-based model object from a meshed geometry by creating
-        data fields that map physical groups to their corresponding 
-        nodes and elements.
+        Plot the displacement metric over time.
 
         Uses
         ----
-            infile
+            df_metrics
         
         Generates
         ---------
-            outfile
+            fig_file
         """
 
         plot_deflection(
-            df=self.df_results,
+            df=self.df_metrics,
             fig_file=str(self.fig_file),
         )
 
@@ -114,10 +115,12 @@ if __name__ == "__main__":
     # NA
 
     # Input paths
-    infile = Path(r"...")
+    model_file = Path(r"...")
+    solution_dir = Path(r"...")
 
     # Output paths
-    outfile = "model.vtk"
+    data_file = "metrics.xlsx"
+    fig_file = "deflection.png"
 
     # ================================================================== #
 
@@ -126,12 +129,14 @@ if __name__ == "__main__":
 
     # Create dictionary containing input data
     dict_inputs = {
-        "infile": infile,
-        "outfile": outfile,
+        "model_file": model_file,
+        "solution_dir": solution_dir,
+        "data_file": data_file,
+        "fig_file": fig_file,
     }
 
     # Create process
-    process = ModelProc(
+    process = PostProc(
         dict_inputs=dict_inputs,
         set_inputs=True,
     )
