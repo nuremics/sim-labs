@@ -6,7 +6,7 @@ def label_entities(
     dim: int,
     infile: Path,
     outfile: str,
-):
+) -> None:
     """
     Label geometric entities on a CAD model and export the labeling information.
 
@@ -45,13 +45,13 @@ def label_entities(
     # Define dictionary containing the labeled entities
     dict_labels = {
         "geometry": str(infile),
-        "entities":{
+        "entities": {
             "Constraint": {
-                "dim": dim-1,
+                "dim": dim - 1,
                 "ids": ids_constraint,
             },
             "Load": {
-                "dim": dim-1,
+                "dim": dim - 1,
                 "ids": ids_load,
             },
             "Body": {

@@ -1,8 +1,9 @@
 import os
-import attrs
 from pathlib import Path
 
+import attrs
 from nuremics import Process
+
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.LabelingProc.ops import (
     label_entities,
 )
@@ -46,12 +47,12 @@ class LabelingProc(Process):
     # Outputs
     outfile: Path = attrs.field(init=False, metadata={"output": True}, converter=Path)
 
-    def __call__(self):
+    def __call__(self) -> None:
         super().__call__()
 
         self.label_entities()
 
-    def label_entities(self):
+    def label_entities(self) -> None:
         """
         Assign labels to the entities of a geometric model.
 
