@@ -85,5 +85,6 @@ def plot_deflection(
         list_plots=list_plots,
         config=(1, 1),
         size=(6, 4),
+        logo=True,
         save_png=fig_file,
     )

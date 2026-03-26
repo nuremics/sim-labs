@@ -95,6 +95,7 @@ def plot_overall(
         list_plots=list_plots,
         config=(1, 2),
         size=(10, 4),
+        logo=True,
         save_png=filename,
     )
 

@@ -1,3 +1,5 @@
+from importlib.resources import files
+
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,8 +12,8 @@ def insert_image_into_plot(
     img_path: str,
     fig: Figure,
     ax: Axes,
-    alpha: float = 0.5,
-    scale: float = 1.0,
+    alpha: float = 0.3,
+    scale: float = 0.8,
 ) -> None:
     """
     Insert an image into a matplotlib Axes, preserving its aspect ratio and plot limits.
@@ -31,72 +33,81 @@ def insert_image_into_plot(
         Values < 1 reduce size, > 1 enlarge.
     """
 
-    # Force figure canvas to render so that axis limits are updated
+    # Force rendering to update axis limits and bounding box
     fig.canvas.draw()
 
-    # Get current axis limits (bounding box of the plot area)
     xmin_plot, xmax_plot = ax.get_xlim()
     ymin_plot, ymax_plot = ax.get_ylim()
 
-    # Re-apply axis limits to prevent matplotlib from auto-scaling after drawing the image
-    ax.set_xlim(xmin_plot, xmax_plot)
-    ax.set_ylim(ymin_plot, ymax_plot)
+    # Physical size of the axes in pixels
+    bbox = ax.get_window_extent()
+    w_display = bbox.width
+    h_display = bbox.height
 
-    # Calculate width, height and aspect ratio of the plot area
-    w_plot = xmax_plot - xmin_plot
-    h_plot = ymax_plot - ymin_plot
-    r_plot = h_plot / w_plot  # aspect ratio of the plot
+    # Data ranges
+    w_data = xmax_plot - xmin_plot
+    h_data = ymax_plot - ymin_plot
 
-    # Load image with PIL to get its native width and height
+    # Scale factors: pixels per data unit
+    sx = w_display / w_data  # pixels / X unit
+    sy = h_display / h_data  # pixels / Y unit
+
+    # Native aspect ratio of the image (in pixels)
     img_pil = Image.open(img_path)
     w_img, h_img = img_pil.size
-    r_img = h_img / w_img  # aspect ratio of the image
+    r_img = h_img / w_img
 
-    # Determine how to scale and position the image based on aspect ratios
-    if abs(r_img - r_plot) < 1e-8:
-        # Image and plot have same aspect ratio: fill entire plot area
-        w_img_target = w_plot
-        h_img_target = h_plot
+    # To display the image without distortion:
+    #   (h_extent * sy) / (w_extent * sx) == r_img
+    # => h_extent / w_extent == r_img * (sx / sy)   [target ratio in data coords]
+    r_target = r_img * (sx / sy)
 
-    elif r_img < r_plot:
-        # Image is relatively wider than plot → scale image width to plot width
-        w_img_target = w_plot
-        h_img_target = r_img * w_img_target  # adjust height to preserve ratio
+    # Compute extent in data coords, fitting within the plot area
+    w_extent = w_data
+    h_extent = r_target * w_data
 
-    else:
-        # Image is relatively taller than plot → scale image height to plot height
-        h_img_target = h_plot
-        w_img_target = h_img_target / r_img  # adjust width to preserve ratio
+    if h_extent > h_data:  # too tall → constrain by height
+        h_extent = h_data
+        w_extent = h_data / r_target
 
-    # Apply the scale factor to computed target size
-    w_img_target *= scale
-    h_img_target *= scale
+    # Apply scale factor
+    w_extent *= scale
+    h_extent *= scale
 
-    # Compute centered coordinates of the image inside the plot limits
+    # Center the image within the plot area
     x_center = (xmin_plot + xmax_plot) / 2
     y_center = (ymin_plot + ymax_plot) / 2
 
-    xmin_img = x_center - w_img_target / 2
-    xmax_img = x_center + w_img_target / 2
-    ymin_img = y_center - h_img_target / 2
-    ymax_img = y_center + h_img_target / 2
+    xmin_img = x_center - w_extent / 2
+    xmax_img = x_center + w_extent / 2
+    ymin_img = y_center - h_extent / 2
+    ymax_img = y_center + h_extent / 2
 
-    # Load image as an array for matplotlib display
+    # Re-apply axis limits to prevent imshow from modifying them
+    ax.set_xlim(xmin_plot, xmax_plot)
+    ax.set_ylim(ymin_plot, ymax_plot)
+
+    # Save current aspect setting before imshow overrides it
+    current_aspect = ax.get_aspect()
+
     img = mpimg.imread(img_path)
-
-    # Display the image with calculated extent and transparency
     ax.imshow(
         img,
         extent=[xmin_img, xmax_img, ymin_img, ymax_img],
-        zorder=0,  # ensure image is drawn behind plot elements
+        zorder=0,
         alpha=alpha,
+        aspect="auto",  # let matplotlib handle aspect ratio based on extent
     )
+
+    # Restore the original aspect setting (e.g. "equal") that imshow may have overridden
+    ax.set_aspect(current_aspect)
 
 
 def plot_xy(
     list_plots: list,
     config: tuple,
     size: tuple,
+    logo: bool = True,
     save_pdf: str = None,
     save_png: str = None,
 ) -> None:
@@ -177,6 +188,16 @@ def plot_xy(
             ax[i].legend(
                 loc="center left",
                 bbox_to_anchor=(1, 0.5)
+            )
+
+        # Insert nuRemics logo in plot background
+        if logo:
+            insert_image_into_plot(
+                img_path=files("nuremics.resources").joinpath("logo.png"),
+                fig=fig,
+                ax=ax[i],
+                alpha=0.3,
+                scale=0.8,
             )
 
     # Save the plot as a PDF if save_pdf is specified
