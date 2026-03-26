@@ -1,7 +1,7 @@
 <img src="https://raw.githubusercontent.com/nuremics/nuremics.github.io/main/images/banner.jpg" width="100%">
 <p align="left">
   <img src="https://img.shields.io/badge/Python-3.9+-ffcd3b?style=flat&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/nuremics-1.0.0+-007bff" />
+  <img src="https://img.shields.io/badge/nuRemics-1.0.0+-007bff" />
   <img src="https://img.shields.io/badge/attrs-22.1.0+-000000" />
 </p>
 
