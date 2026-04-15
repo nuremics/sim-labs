@@ -1,0 +1,74 @@
+workflow:
+  - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.GeometryProc
+    hard_params:
+      dim: 3
+      length: 10.0
+      width: 1.0
+      height: 0.1
+    output_paths:
+      outfile: geometry.brep
+
+  - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.LabelingProc
+    hard_params:
+      dim: 3
+    required_paths:
+      infile: geometry.brep
+    output_paths:
+      outfile: labels.json
+
+  - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.MeshProc
+    hard_params:
+      dim: 3
+    user_paths:
+      mesh_settings_file: mesh_settings.json
+    required_paths:
+      infile: labels.json
+    output_paths:
+      outfile: mesh.msh
+
+  - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.ModelProc
+    required_paths:
+      infile: mesh.msh
+    output_paths:
+      outfile: model.vtk
+
+  - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.SolverProc
+    user_params:
+      mass: mass
+    hard_params:
+      young: 1.2e6
+      poisson: 0.0
+      force: 4.0
+    user_paths:
+      mesh_settings_file: mesh_settings.json
+      time_settings_file: time_settings.json
+      solver_settings_file: solver_settings.json
+    required_paths:
+      mesh_file: mesh.msh
+      model_file: model.vtk
+    output_paths:
+      outdir: solution
+
+  - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.PostProc
+    required_paths:
+      model_file: model.vtk
+      solution_dir: solution
+    output_paths:
+      data_file: metrics.xlsx
+      fig_file: deflection.png
+
+  - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.AnalysisProc
+    overall_analysis:
+      data_file: metrics.xlsx
+    output_paths:
+      fig_file: overall_comparisons.png
+      error_file: overall_errors.csv
+    settings:
+      add: true
+      color: red
+      linestyle: "-"
+      linewidth: 1.5
+      label: ""
+
+default_params:
+  mass: 5.0

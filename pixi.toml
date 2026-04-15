@@ -23,7 +23,7 @@ xlsxwriter = ">=3.2.3,<4"
 openpyxl = ">=3.1.5,<4"
 
 [feature.DEMO_APP.tasks]
-DEMO_APP = "python ./src/nuremics_labs/apps/general/DEMO_APP/system.py"
+DEMO_APP = "python ./src/nuremics_labs/system.py general DEMO_APP"
 
 [feature.CANTILEVER_SHEAR_APP.dependencies]
 pythonocc-core = ">=7.4.0,<8"
@@ -39,7 +39,7 @@ numpy = ">=2.4.2,<3"
 pyvista = ">=0.47.1,<0.48"
 
 [feature.CANTILEVER_SHEAR_APP.tasks]
-CANTILEVER_SHEAR_APP = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/system.py"
+CANTILEVER_SHEAR_APP = "python ./src/nuremics_labs/system.py simulation CANTILEVER_SHEAR_APP"
 GeometryProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/GeometryProc/item.py"
 LabelingProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/LabelingProc/item.py"
 MeshProc = "python ./src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/MeshProc/item.py"
