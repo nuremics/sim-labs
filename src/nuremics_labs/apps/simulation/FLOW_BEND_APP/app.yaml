@@ -1,0 +1,82 @@
+workflow:
+  - process: nuremics_labs.apps.simulation.FLOW_BEND_APP.procs.GeometryProc
+    user_params:
+      r: radius
+      R: bend_radius
+      L0: inlet_length
+      L1: outlet_length
+    output_paths:
+      outfile: geometry.brep
+
+  - process: nuremics_labs.apps.simulation.FLOW_BEND_APP.procs.LabelingProc
+    user_params:
+      R: bend_radius
+      L0: inlet_length
+      L1: outlet_length
+    required_paths:
+      infile: geometry.brep
+    output_paths:
+      outfile: labels.json
+
+  - process: nuremics_labs.apps.simulation.FLOW_BEND_APP.procs.MeshProc
+    user_params:
+      dx: dx
+    required_paths:
+      infile: labels.json
+    output_paths:
+      outfile: mesh.msh
+
+  - process: nuremics_labs.apps.simulation.FLOW_BEND_APP.procs.ModelProc
+    required_paths:
+      infile: mesh.msh
+    output_paths:
+      outfile: model.vtk
+
+  - process: nuremics_labs.apps.simulation.FLOW_BEND_APP.procs.SolverProc
+    user_params:
+      r: radius
+      R: bend_radius
+      u_mean: u_mean
+      rho: rho
+      mu: mu
+      t_final: t_final
+      dt: dt
+      ramp: ramp
+    required_paths:
+      mesh_file: mesh.msh
+    output_paths:
+      outdir: solution
+
+#   - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.PostProc
+#     required_paths:
+#       model_file: model.vtk
+#       solution_dir: solution
+#     output_paths:
+#       data_file: metrics.xlsx
+#       fig_file: deflection.png
+
+#   - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.AnalysisProc
+#     overall_analysis:
+#       data_file: metrics.xlsx
+#     output_paths:
+#       fig_file: overall_comparisons.png
+#       error_file: overall_errors.csv
+#     settings:
+#       add: true
+#       color: red
+#       linestyle: "-"
+#       linewidth: 1.5
+#       label: ""
+
+default_params:
+  radius: 2.0
+  bend_radius: 5.0
+  inlet_length: 20.0
+  outlet_length: 10.0
+  dx: 0.5
+  u_mean: 1.0
+  rho: 1.1
+  mu: 3.6e-2
+  t_final: 50.0
+  dt: 0.5
+  ramp: 5.0
