@@ -1,9 +1,9 @@
 # ModelProc
 
 <p align="left">
-  <img src="https://img.shields.io/badge/meshio-5.3.5+-81ecec" />
   <img src="https://img.shields.io/badge/NumPy-2.4.2+-4dabcf?style=flat&logo=numpy&logoColor=white" />
-  <img src="https://img.shields.io/badge/PyVista-0.47.1+-00b25e" />
+  <img src="https://img.shields.io/badge/PyVista-0.48.0+-00b25e" />
+  <img src="https://img.shields.io/badge/meshio-5.3.5+-81ecec" />
 </p>
 
 ## Process

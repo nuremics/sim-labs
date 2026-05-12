@@ -89,6 +89,76 @@ def compile_solution(
         pvd_file.write(pvd_content)
 
 
+def create_animation(
+    solution_dir: Path,
+):
+
+    reader = pv.get_reader(solution_dir / "solution.pvd")
+    times = reader.time_values
+
+    reader.set_active_time_point(0)
+    mesh = reader.read()[0]
+
+    mesh0 = pv.read(solution_dir / "dump" / "solution0.vtu")
+    mesh1 = pv.read(solution_dir / "dump" / f"solution{len(times)-1}.vtu")
+
+    mesh["Z Displacement"] = mesh.point_data["Displacement"][:, 2]
+
+    plotter = pv.Plotter(off_screen=True)
+    plotter.add_mesh(
+        mesh=mesh0,
+        color="white",
+        opacity=0.2,
+    )
+    plotter.add_mesh(
+        mesh=mesh1,
+        color="white",
+        opacity=0.0,
+    )
+    plotter.add_mesh(
+        mesh=mesh,
+        lighting=False,
+        cmap="viridis",
+        clim=[0.0, 6.698],
+        scalars="Z Displacement",
+        scalar_bar_args={
+            "title": "Z Displacement",
+        },
+    )
+    text_actor = plotter.add_text(
+        "",
+        position="upper_right",
+        font_size=14,
+        color="black",
+    )
+    plotter.view_xz()
+    plotter.camera.azimuth = 30
+    plotter.camera.elevation = 10
+    plotter.reset_camera_clipping_range()
+
+    plotter.open_movie(
+        filename=solution_dir / "animation.mp4",
+        framerate=len(times) / 5,
+    )
+    for i, t in enumerate(times):
+
+        reader.set_active_time_point(i)
+        new_mesh = reader.read()[0]
+
+        mesh.copy_from(new_mesh)
+        mesh["Z Displacement"] = new_mesh.point_data["Displacement"][:, 2]
+        mesh.set_active_scalars("Z Displacement")
+        
+        text_actor.set_text(
+            position="upper_right",
+            text=f"t = {t:.3f}",
+        )
+
+        plotter.write_frame()
+
+    plotter.close()
+
+
 def _compute_displacement_field(
     results: list,
 ) -> None:

@@ -3,7 +3,7 @@
 <p align="left">
   <img src="https://img.shields.io/badge/NumPy-2.4.2+-4dabcf?style=flat&logo=numpy&logoColor=white" />
 
-  <img src="https://img.shields.io/badge/PyVista-0.47.1+-00b25e" />
+  <img src="https://img.shields.io/badge/PyVista-0.48.0+-00b25e" />
   <img src="https://img.shields.io/badge/Pandas-2.1.1+-0b0153?style=flat&logo=pandas&logoColor=white" />
   <img src="https://img.shields.io/badge/openpyxl-3.1.5+-010043" />
   <img src="https://img.shields.io/badge/matplotlib-3.9.4+-11557c" />

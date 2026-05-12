@@ -3,14 +3,16 @@
 <p align="left">
   <img src="https://img.shields.io/badge/SOFA Framework-25.6.0-e84e1c" />
   <img src="https://img.shields.io/badge/NumPy-2.4.2+-4dabcf?style=flat&logo=numpy&logoColor=white" />
-  <img src="https://img.shields.io/badge/PyVista-0.47.1+-00b25e" />
+  <img src="https://img.shields.io/badge/PyVista-0.48.0+-00b25e" />
+  <img src="https://img.shields.io/badge/imageio-2.37.0+-000000" />
 </p>
 
 ## Process
 
 Compute the mechanical deformation of a physical system under prescribed boundary conditions.<br>
 A/ **`run_solver`:** Define the simulation setup, apply boundary conditions, and execute the solver to compute the raw simulation results.<br>
-B/ **`compile_solution`:** Compile the raw simulation results into a PVD format and compute the displacement field over the model.
+B/ **`compile_solution`:** Compile the raw simulation results into a PVD format and compute the displacement field over the model.<br>
+C/ **`create_animation`:** Create an animation of the simulation results.
 
 ```mermaid
 erDiagram
@@ -35,6 +37,7 @@ erDiagram
   **ModelProc** {
     op run_solver
     op compile_solution
+    op create_animation
   }
   **Outputs** {
     folder outdir "_"

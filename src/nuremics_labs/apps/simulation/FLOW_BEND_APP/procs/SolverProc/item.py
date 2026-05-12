@@ -7,6 +7,7 @@ from nuremics import Process
 
 from nuremics_labs.apps.simulation.FLOW_BEND_APP.procs.SolverProc.ops import (
     run_solver,
+    create_animation,
 )
 
 
@@ -33,6 +34,7 @@ class SolverProc(Process):
         super().__call__()
 
         self.run_solver()
+        self.create_animation()
 
     def run_solver(self) -> None:
 
@@ -60,6 +62,12 @@ class SolverProc(Process):
             dt=self.dt,
             ramp=self.ramp,
             solution_dir=str(self.outdir),
+        )
+    
+    def create_animation(self) -> None:
+
+        create_animation(
+            solution_dir=self.outdir,
         )
 
 

@@ -7,6 +7,7 @@ from nuremics import Process
 
 from nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.SolverProc.ops import (
     compile_solution,
+    create_animation,
     run_solver,
 )
 
@@ -81,6 +82,7 @@ class SolverProc(Process):
 
         self.run_solver()
         self.compile_solution()
+        self.create_animation()
 
     def run_solver(self) -> None:
         """
@@ -146,6 +148,23 @@ class SolverProc(Process):
             dt=self.dict_solver_settings["dt"],
             results_path=self.outdir,
             output_path=self.outdir / "solution.pvd",
+        )
+    
+    def create_animation(self) -> None:
+        """
+        Create an animation of the simulation results.
+
+        Uses
+        ----
+            outdir
+        
+        Generates
+        ---------
+            outdir
+        """
+
+        create_animation(
+            solution_dir=self.outdir,
         )
 
 

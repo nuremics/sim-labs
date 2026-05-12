@@ -5,7 +5,8 @@
   <img src="https://img.shields.io/badge/Gmsh-4.15.0+-ffffff" />
   <img src="https://img.shields.io/badge/meshio-5.3.5+-81ecec" />
   <img src="https://img.shields.io/badge/NumPy-2.4.2+-4dabcf?style=flat&logo=numpy&logoColor=white" />
-  <img src="https://img.shields.io/badge/PyVista-0.47.1+-00b25e" />
+  <img src="https://img.shields.io/badge/PyVista-0.48.0+-00b25e" />
+  <img src="https://img.shields.io/badge/imageio-2.37.0+-000000" />
   <img src="https://img.shields.io/badge/SOFA Framework-25.6.0-e84e1c" />
   <img src="https://img.shields.io/badge/Pandas-2.1.1+-0b0153?style=flat&logo=pandas&logoColor=white" />
   <img src="https://img.shields.io/badge/openpyxl-3.1.5+-010043" />
@@ -24,7 +25,8 @@
   A/ **`build_model`:** Build a VTK-based model object from a meshed geometry by creating data fields that map physical groups to their corresponding nodes and elements.
 5. **[`SolverProc`](https://github.com/nuremics/sim-labs/tree/main/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/SolverProc):** Compute the mechanical deformation of a physical system under prescribed boundary conditions.<br>
   A/ **`run_solver`:** Define the simulation setup, apply boundary conditions, and execute the solver to compute the raw simulation results.<br>
-  B/ **`compile_solution`:** Compile the raw simulation results into a PVD format and compute the displacement field over the model.
+  B/ **`compile_solution`:** Compile the raw simulation results into a PVD format and compute the displacement field over the model.<br>
+  C/ **`create_animation`:** Create an animation of the simulation results.
 6. **[`PostProc`](https://github.com/nuremics/sim-labs/tree/main/src/nuremics_labs/apps/simulation/CANTILEVER_SHEAR_APP/procs/PostProc):** Post-process simulation results to extract relevant metrics.<br>
   A/ **`get_deflection`:** Extract the displacement at the extremity of the object from raw simulation results and save it to a metric data file.<br>
   B/ **`plot_deflection`:** Plot the displacement metric over time.
@@ -47,6 +49,7 @@ flowchart RL
   Op41[<b>build_model<b>] e11@--A--o Proc4
   Op51[<b>run_solver<b>] e12@--A--o Proc5
   Op52[<b>compile_solution<b>] e13@--B--o Proc5
+  Op53[<b>create_animation<b>] e13@--B--o Proc5
   Op61[<b>get_deflection<b>] e14@--A--o Proc6
   Op62[<b>plot_deflection<b>] e15@--B--o Proc6
   Op71[<b>plot_overall<b>] e16@--A--o Proc7
