@@ -66,6 +66,7 @@ LabelingProc = "python ./src/nuremics_labs/apps/simulation/FLOW_BEND_APP/procs/L
 MeshProc = "python ./src/nuremics_labs/apps/simulation/FLOW_BEND_APP/procs/MeshProc/item.py"
 ModelProc = "python ./src/nuremics_labs/apps/simulation/FLOW_BEND_APP/procs/ModelProc/item.py"
 SolverProc = "python ./src/nuremics_labs/apps/simulation/FLOW_BEND_APP/procs/SolverProc/item.py"
+PostProc = "python ./src/nuremics_labs/apps/simulation/FLOW_BEND_APP/procs/PostProc/item.py"
 
 [environments]
 demo = ["DEMO_APP"]

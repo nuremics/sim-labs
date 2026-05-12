@@ -47,13 +47,14 @@ workflow:
     output_paths:
       outdir: solution
 
-#   - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.PostProc
-#     required_paths:
-#       model_file: model.vtk
-#       solution_dir: solution
-#     output_paths:
-#       data_file: metrics.xlsx
-#       fig_file: deflection.png
+  - process: nuremics_labs.apps.simulation.FLOW_BEND_APP.procs.PostProc
+    user_params:
+      r: radius
+    required_paths:
+      solution_dir: solution
+    output_paths:
+      data_file: probes.csv
+      fig_file: probes.png
 
 #   - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.AnalysisProc
 #     overall_analysis:
