@@ -85,3 +85,81 @@ def plot_probes_velocity(
         logo=True,
         save_png=fig_file,
     )
+
+
+def get_velocity_profiles(
+    r: float,
+    R: float,
+    solution_dir: Path,
+    data_file: Path,
+) -> None:
+
+    reader = pv.get_reader(solution_dir / "dump" / "u.pvd")
+    times = reader.time_values
+
+    reader.set_active_time_point(len(times) - 1)
+    mesh = reader.read()[0]
+
+    velocity_magnitude = np.linalg.norm(
+        mesh.point_data["u"],
+        axis=1,
+    )
+    mesh["velocity_magnitude"] = velocity_magnitude
+
+    resolution = 200
+    profile_upstream = mesh.sample_over_line(
+        pointa=(R, 0.0, R - r),
+        pointb=(R, 0.0, r + R),
+        resolution=resolution,
+    )
+    profile_downstream = mesh.sample_over_line(
+        pointa=(r, 0.0, 0.0),
+        pointb=(-r, 0.0, 0.0),
+        resolution=resolution,
+    )
+
+    s = profile_upstream["Distance"]
+    s_normalized = s / s[-1]
+
+    df = pd.DataFrame({
+        "s": s_normalized,
+        "upstream": profile_upstream["velocity_magnitude"],
+        "downstream": profile_downstream["velocity_magnitude"],
+    })
+    df.to_csv(
+        path_or_buf=data_file,
+        index=False,
+    )
+
+    return df
+
+
+def plot_velocity_profiles(
+    df: pd.DataFrame,
+    fig_file: str,
+) -> None:
+
+    list_plots = [
+        {
+            "df": [df, df],
+            "x_column": ["s", "s"],
+            "y_column": ["upstream", "downstream"],
+            "title": None,
+            "x_label": "Inner to ➝ Outer wall",
+            "y_label": "u Magnitude",
+            "label": ["Upstream", "Downstream"],
+            "marker": None,
+            "linestyle": ["-", "-"],
+            "linewidth": [1.5, 1.5],
+            "color": ["dodgerblue", "red"],
+            "zorder": None,
+        },
+    ]
+
+    plot_xy(
+        list_plots=list_plots,
+        config=(1, 1),
+        size=(6, 4),
+        logo=True,
+        save_png=fig_file,
+    )

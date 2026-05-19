@@ -39,13 +39,13 @@ if __name__ == "__main__":
     # ================================================================== #
 
     # Working directory
-    working_dir = Path(r"C:\Users\julie\Documents\nuRemics\test")
+    working_dir = Path(r"...")
 
     # Input parameters
     # NA
 
     # Input paths
-    infile = Path(r"C:\Users\julie\Documents\nuRemics\test") / "mesh.msh"
+    infile = Path(r"...") / "mesh.msh"
 
     # Output paths
     outfile = "model.vtk"

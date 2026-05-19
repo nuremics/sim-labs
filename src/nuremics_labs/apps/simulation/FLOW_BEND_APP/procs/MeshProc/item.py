@@ -1,4 +1,3 @@
-import json
 import os
 from pathlib import Path
 
@@ -18,7 +17,6 @@ class MeshProc(Process):
 
     # Paths
     infile: Path = attrs.field(init=False, metadata={"input": True}, converter=Path)
-    # mesh_settings_file: Path = attrs.field(init=False, metadata={"input": True}, converter=Path)
 
     # Outputs
     outfile: Path = attrs.field(init=False, metadata={"output": True}, converter=Path)
@@ -30,18 +28,10 @@ class MeshProc(Process):
 
     def generate_mesh(self) -> None:
 
-        # with open(self.mesh_settings_file) as f:
-        #     dict_mesh_settings = json.load(f)
-
         generate_mesh(
             dx=self.dx,
             infile=str(self.infile),
             outfile=str(self.outfile),
-            # dim=self.dim,
-            # elem=dict_mesh_settings["elem"],
-            # nb_elem_length=dict_mesh_settings["nb_elem_length"],
-            # nb_elem_width=dict_mesh_settings["nb_elem_width"],
-            # nb_elem_height=dict_mesh_settings["nb_elem_height"],
         )
 
 
@@ -53,14 +43,13 @@ if __name__ == "__main__":
     # ================================================================== #
 
     # Working directory
-    working_dir = Path(r"C:\Users\julie\Documents\nuRemics\test")
+    working_dir = Path(r"...")
 
     # Input parameters
     dx = 0.5
 
     # Input paths
-    infile = Path(r"C:\Users\julie\Documents\nuRemics\test") / "labels.json"
-    # mesh_settings_file = Path(r"...")
+    infile = Path(r"...") / "labels.json"
 
     # Output paths
     outfile = "mesh.msh"
@@ -74,7 +63,6 @@ if __name__ == "__main__":
     dict_inputs = {
         "dx": dx,
         "infile": infile,
-        # "mesh_settings_file": mesh_settings_file,
         "outfile": outfile,
     }
 

@@ -50,24 +50,26 @@ workflow:
   - process: nuremics_labs.apps.simulation.FLOW_BEND_APP.procs.PostProc
     user_params:
       r: radius
+      R: bend_radius
     required_paths:
       solution_dir: solution
     output_paths:
-      data_file: probes.csv
-      fig_file: probes.png
+      probes_data_file: probes.csv
+      probes_fig_file: probes.png
+      profiles_data_file: profiles.csv
+      profiles_fig_file: profiles.png
 
-#   - process: nuremics_labs.apps.simulation.CANTILEVER_SHEAR_APP.procs.AnalysisProc
-#     overall_analysis:
-#       data_file: metrics.xlsx
-#     output_paths:
-#       fig_file: overall_comparisons.png
-#       error_file: overall_errors.csv
-#     settings:
-#       add: true
-#       color: red
-#       linestyle: "-"
-#       linewidth: 1.5
-#       label: ""
+  - process: nuremics_labs.apps.simulation.FLOW_BEND_APP.procs.AnalysisProc
+    overall_analysis:
+      data_file: profiles.csv
+    output_paths:
+      fig_file: overall_comparisons.png
+    settings:
+      add: true
+      color: red
+      linestyle: "-"
+      linewidth: 1.5
+      label: ""
 
 default_params:
   radius: 2.0

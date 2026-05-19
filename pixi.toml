@@ -67,6 +67,7 @@ MeshProc = "python ./src/nuremics_labs/apps/simulation/FLOW_BEND_APP/procs/MeshP
 ModelProc = "python ./src/nuremics_labs/apps/simulation/FLOW_BEND_APP/procs/ModelProc/item.py"
 SolverProc = "python ./src/nuremics_labs/apps/simulation/FLOW_BEND_APP/procs/SolverProc/item.py"
 PostProc = "python ./src/nuremics_labs/apps/simulation/FLOW_BEND_APP/procs/PostProc/item.py"
+AnalysisProc = "python ./src/nuremics_labs/apps/simulation/FLOW_BEND_APP/procs/AnalysisProc/item.py"
 
 [environments]
 demo = ["DEMO_APP"]

@@ -45,7 +45,7 @@ if __name__ == "__main__":
     # ================================================================== #
 
     # Working directory
-    working_dir = Path(r"C:\Users\julie\Documents\nuRemics\test")
+    working_dir = Path(r"...")
 
     # Input parameters
     r=2.0

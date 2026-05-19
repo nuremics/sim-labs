@@ -47,7 +47,7 @@ if __name__ == "__main__":
     # ================================================================== #
 
     # Working directory
-    working_dir = Path(r"C:\Users\julie\Documents\nuRemics\test")
+    working_dir = Path(r"...")
 
     # Input parameters
     R=5.0
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     L1=10.0
 
     # Input paths
-    infile = Path(r"C:\Users\julie\Documents\nuRemics\test") / "geometry.brep"
+    infile = Path(r"...") / "geometry.brep"
 
     # Output paths
     outfile = "labels.json"

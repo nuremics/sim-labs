@@ -79,7 +79,7 @@ if __name__ == "__main__":
     # ================================================================== #
 
     # Working directory
-    working_dir = Path(r"C:\Users\julie\Documents\nuRemics\test")
+    working_dir = Path(r"...")
 
     # Input parameters
     r = 2.0
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     ramp = 5.0
 
     # Input paths
-    mesh_file = Path(r"C:\Users\julie\Documents\nuRemics\test") / "mesh.msh"
+    mesh_file = Path(r"...") / "mesh.msh"
 
     # Output paths
     outdir = "solution"
