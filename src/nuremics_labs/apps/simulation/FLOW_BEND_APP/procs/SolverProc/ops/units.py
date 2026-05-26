@@ -2,8 +2,8 @@ import os
 import subprocess
 from pathlib import Path
 
-import pyvista as pv
 import numpy as np
+import pyvista as pv
 
 DOCKER_IMAGE = "dolfinx/dolfinx:stable"
 
@@ -19,7 +19,7 @@ def run_solver(
     dt: float,
     ramp: float,
     solution_dir: str,
-):
+) -> None:
     
     fenicsx_script_path = Path(__file__).parent / "fenicsx.py"
 
@@ -40,7 +40,7 @@ def run_solver(
 
 def create_animation(
     solution_dir: Path,
-):
+) -> None:
 
     mesh0 = pv.read(solution_dir / "mesh.msh")
 
@@ -136,7 +136,7 @@ def _run_fenicsx(
     dt: float,
     ramp: float,
     solution_dir: str,
-):
+) -> None:
 
     cwd = Path.cwd().resolve()
     script_path = Path(script_path).resolve()

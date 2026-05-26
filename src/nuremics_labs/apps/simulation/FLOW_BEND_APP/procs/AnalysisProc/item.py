@@ -1,5 +1,3 @@
-import json
-import os
 from pathlib import Path
 
 import attrs
@@ -38,6 +36,9 @@ class AnalysisProc(Process):
 
 
 if __name__ == "__main__":
+
+    import json
+    import os
 
     # ================================================================== #
     #                      USER-DEFINED PARAMETERS                       #

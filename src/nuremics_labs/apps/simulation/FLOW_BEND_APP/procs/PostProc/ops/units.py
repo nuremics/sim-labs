@@ -16,8 +16,8 @@ def get_probes_velocity(
 ) -> None:
 
     probe_points = np.array([
-        [ 0.5 * r, 0.0, 0.0],
-        [     0.0, 0.0, 0.0],
+        [0.5 * r, 0.0, 0.0],
+        [0.0, 0.0, 0.0],
         [-0.5 * r, 0.0, 0.0],
     ])
     probes = pv.PolyData(probe_points)

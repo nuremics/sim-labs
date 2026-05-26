@@ -37,7 +37,7 @@ def label_entities(
     boundaries = gmsh.model.getBoundary(volumes, oriented=False)
     for boundary in boundaries:
         center_of_mass = gmsh.model.occ.getCenterOfMass(boundary[0], boundary[1])
-        if np.allclose(center_of_mass, [R+L0, 0, R]):
+        if np.allclose(center_of_mass, [R + L0, 0, R]):
             inlet.append(boundary[1])
         elif np.allclose(center_of_mass, [0, 0, -L1]):
             outlet.append(boundary[1])

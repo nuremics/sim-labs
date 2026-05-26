@@ -48,10 +48,10 @@ if __name__ == "__main__":
     working_dir = Path(r"...")
 
     # Input parameters
-    r=2.0
-    R=5.0
-    L0=20.0
-    L1=10.0
+    r = 2.0
+    R = 5.0
+    L0 = 20.0
+    L1 = 10.0
 
     # Output paths
     outfile = "geometry.brep"

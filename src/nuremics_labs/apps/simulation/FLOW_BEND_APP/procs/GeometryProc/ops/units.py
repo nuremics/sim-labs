@@ -1,15 +1,15 @@
 import math
 
-from OCC.Core.gp import gp_Circ, gp_Pnt, gp_Ax2, gp_Dir
 from OCC.Core.BRep import BRep_Tool
-from OCC.Core.BRepOffsetAPI import BRepOffsetAPI_MakePipeShell
 from OCC.Core.BRepBuilderAPI import (
     BRepBuilderAPI_MakeEdge,
     BRepBuilderAPI_MakeWire,
 )
+from OCC.Core.BRepOffsetAPI import BRepOffsetAPI_MakePipeShell
 from OCC.Core.BRepTools import breptools
-from OCC.Core.TopExp import TopExp_Explorer
+from OCC.Core.gp import gp_Ax2, gp_Circ, gp_Dir, gp_Pnt
 from OCC.Core.TopAbs import TopAbs_VERTEX
+from OCC.Core.TopExp import TopExp_Explorer
 
 
 def create_geometry(
@@ -26,7 +26,7 @@ def create_geometry(
         gp_Dir(0, 0, 1),
     )
     circle = gp_Circ(ax2_circle, R)
-    arc = BRepBuilderAPI_MakeEdge(circle, 0, math.pi/2).Edge()
+    arc = BRepBuilderAPI_MakeEdge(circle, 0, math.pi / 2).Edge()
 
     pts = []
     exp = TopExp_Explorer(arc, TopAbs_VERTEX)
@@ -35,8 +35,8 @@ def create_geometry(
         pts.append(BRep_Tool.Pnt(v))
         exp.Next()
 
-    P_start_ext = gp_Pnt(R+L0, 0, R)
-    P_end_ext   = gp_Pnt(0, 0, -L1)
+    P_start_ext = gp_Pnt(R + L0, 0, R)
+    P_end_ext = gp_Pnt(0, 0, -L1)
     seg1 = BRepBuilderAPI_MakeEdge(P_start_ext, pts[0]).Edge()
     seg2 = BRepBuilderAPI_MakeEdge(pts[1], P_end_ext).Edge()
     

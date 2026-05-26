@@ -7,8 +7,8 @@ from nuremics import Process
 
 from nuremics_labs.apps.simulation.FLOW_BEND_APP.procs.PostProc.ops import (
     get_probes_velocity,
-    plot_probes_velocity,
     get_velocity_profiles,
+    plot_probes_velocity,
     plot_velocity_profiles,
 )
 

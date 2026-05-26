@@ -91,7 +91,7 @@ def compile_solution(
 
 def create_animation(
     solution_dir: Path,
-):
+) -> None:
 
     reader = pv.get_reader(solution_dir / "solution.pvd")
     times = reader.time_values
@@ -100,7 +100,7 @@ def create_animation(
     mesh = reader.read()[0]
 
     mesh0 = pv.read(solution_dir / "dump" / "solution0.vtu")
-    mesh1 = pv.read(solution_dir / "dump" / f"solution{len(times)-1}.vtu")
+    mesh1 = pv.read(solution_dir / "dump" / f"solution{len(times) - 1}.vtu")
 
     mesh["Z Displacement"] = mesh.point_data["Displacement"][:, 2]
 

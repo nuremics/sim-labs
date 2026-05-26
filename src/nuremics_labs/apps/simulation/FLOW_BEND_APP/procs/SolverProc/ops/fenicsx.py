@@ -1,47 +1,42 @@
 import sys
+from pathlib import Path
 
 import gmsh
 import numpy as np
-from pathlib import Path
-
-from mpi4py import MPI
-from petsc4py import PETSc
-
 from basix.ufl import element
-
 from dolfinx.fem import (
     Constant,
     Function,
-    functionspace,
     dirichletbc,
     extract_function_spaces,
     form,
+    functionspace,
     locate_dofs_topological,
-    set_bc,
 )
 from dolfinx.fem.petsc import (
     apply_lifting,
     assemble_matrix,
     assemble_vector,
-    create_vector,
     create_matrix,
+    create_vector,
     set_bc,
 )
-from dolfinx.io import VTXWriter, gmsh as gmshio
 from dolfinx.io import VTKFile
+from dolfinx.io import gmsh as gmshio
+from mpi4py import MPI
+from petsc4py import PETSc
 from ufl import (
     TestFunction,
     TrialFunction,
     div,
     dot,
     dx,
+    grad,
     inner,
     lhs,
-    grad,
     nabla_grad,
     rhs,
 )
-
 
 gmsh.initialize()
 
@@ -61,7 +56,7 @@ ft.name = "Facet markers"
 
 t = 0.0
 t_final = float(sys.argv[7])  # Final time
-dt = float(sys.argv[8]) # Time step size
+dt = float(sys.argv[8])  # Time step size
 num_steps = int(t_final / dt)
 k = Constant(mesh, PETSc.ScalarType(dt))
 mu = Constant(mesh, PETSc.ScalarType(float(sys.argv[6])))  # Dynamic viscosity
@@ -74,13 +69,18 @@ Q = functionspace(mesh, s_cg1)
 
 fdim = mesh.topology.dim - 1
 
+
 class InletVelocity:
 
-    def __init__(self, t):
+    def __init__(self,
+        t: float,
+    ) -> None:
 
         self.t = t
 
-    def __call__(self, x):
+    def __call__(self,
+        x: np.ndarray,
+    ) -> np.ndarray:
 
         values = np.zeros((3, x.shape[1]), dtype=PETSc.ScalarType)
 
@@ -91,7 +91,7 @@ class InletVelocity:
 
         T = 2.0 * ramp
         if self.t <= ramp:
-            load_curve = 0.5 * np.cos(2.0 * np.pi * (self.t - 0.5*T) / T) + 0.5
+            load_curve = 0.5 * np.cos(2.0 * np.pi * (self.t - 0.5 * T) / T) + 0.5
         else:
             load_curve = 1.0
 
@@ -102,6 +102,7 @@ class InletVelocity:
         values[0] = - 2 * Umean * (1 - r2 / r**2) * load_curve
 
         return values
+
 
 # Inlet
 u_inlet = Function(V)

@@ -6,8 +6,8 @@ import attrs
 from nuremics import Process
 
 from nuremics_labs.apps.simulation.FLOW_BEND_APP.procs.SolverProc.ops import (
-    run_solver,
     create_animation,
+    run_solver,
 )
 
 

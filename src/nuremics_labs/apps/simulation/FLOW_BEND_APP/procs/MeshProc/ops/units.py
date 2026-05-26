@@ -13,7 +13,7 @@ def generate_mesh(
         dict_labels = json.load(f)
 
     gmsh.initialize(
-        interruptible=False
+        interruptible=False,
     )
     gmsh.clear()
 
@@ -35,7 +35,7 @@ def generate_mesh(
     
     gmsh.model.occ.synchronize()
 
-    gmsh.option.setNumber("Mesh.CharacteristicLengthMin", 0.5*dx)
+    gmsh.option.setNumber("Mesh.CharacteristicLengthMin", 0.5 * dx)
     gmsh.option.setNumber("Mesh.CharacteristicLengthMax", dx)
     gmsh.model.mesh.generate(3)
     gmsh.model.mesh.optimize("Netgen")
